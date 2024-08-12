@@ -1,0 +1,468 @@
+
+<div class="page-wrapper">
+    <div class="content container-fluid">
+        <!-- Page Header -->
+		<div class="page-header">
+			<div class="row">
+				<div class="col-sm-12">
+					<h3 class="page-title">Hospitalisation</h3>
+					<ul class="breadcrumb">
+						<li class="breadcrumb-item"><a [routerLink]="'/admin/'">Administration</a></li>
+						<li class="breadcrumb-item active">Création Hospitalisation</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+        <div class="container">
+            <div class="steps">
+                <span class="circle active">
+                    <i class="fa fa-hospital-o" aria-hidden="true"></i>
+                    1
+                </span>
+
+                
+
+
+                <span class="circle">
+                    <i class='fas fa-clinic-medical' style='font-size:24px;color:blue'></i>
+                    2
+                </span>
+                <span class="circle">
+                    <i class='fas fa-stethoscope' style='font-size:24px;color:blue'></i>
+                    3</span>
+                <span class="circle">
+                    <i class='fas fa-comment-medical' style='font-size:24px;color:blue'></i>
+                    4
+                </span>
+                <span class="circle">
+                    <i class='fas fa-notes-medical' style='font-size:24px;color:blue'></i>
+                    5
+                </span>
+                
+                <div class="progress-bar">
+                    <span class="indicator">
+                    </span>
+                </div>
+
+                
+               
+
+            </div>
+
+            <div class="row form-row" *ngIf="currentStep===1">
+                <hr>
+
+                <div class="col-md-12 mt-3">
+                    <div class="form-group mb-0">
+                        <label>Motif(s) d'hospitalisation</label>
+                        <textarea class="form-control" rows="2"></textarea>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <div class="form-group mb-0">
+                        <label>Histoire de la maladie</label>
+                        <textarea class="form-control" rows="2"></textarea>
+                    </div>
+                </div>
+
+                <div class="bfr-header">
+                    <h4><strong> <u> Antécédents et Terrains  </u></strong> </h4> 
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group mb-0">
+                            <label>Médicaux</label>
+                            <textarea class="form-control" rows="2"></textarea>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group mb-0">
+                            <label>Chirurgicaux</label>
+                            <textarea class="form-control" rows="2"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="form-group mb-0">
+                            <label>Gynéco obstétricaux</label>
+                            <textarea class="form-control" rows="2"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="bfr-header">
+                        <label for=""> Antécédents familiaux </label>
+                      </div>
+            
+
+                    <div class="col-md-12">
+                        <div class="form-group mb-0">
+                            <label>Ascendants</label>
+                            <textarea class="form-control" rows="2"></textarea>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group mb-0">
+                            <label>Collatéraux</label>
+                            <textarea class="form-control" rows="2"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="form-group mb-0">
+                            <label>Descendants</label>
+                            <textarea class="form-control" rows="2"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="form-group mb-0">
+                            <label>Mode de vie</label>
+                            <textarea class="form-control" rows="2"></textarea>
+                        </div>
+                    </div>
+                </div>
+            
+                <div class="bfr-header col-md-12 col-sm-12">
+                    <label for=""> <u> Examen physique </u> </label>
+                </div>
+                <div class="text-center col-md-12 col-sm-12">
+                    <label for=""> <u> Constantes </u> </label>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label>PAS (mmHg) <span class="text-danger">*</span></label>
+                        <input type="number" class="form-control">
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label>PAD (mmHg) <span class="text-danger">*</span></label>
+                        <input type="number" class="form-control" value="">
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label>Température (°C) <span class="text-danger">*</span></label>
+                        <input type="number" class="form-control">
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label>FC (bpm) <span class="text-danger">*</span></label>
+                        <input type="number" class="form-control" value="">
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label>FR (cpm) <span class="text-danger">*</span></label>
+                        <input type="number" class="form-control">
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label>Saturation en O2 (%) <span class="text-danger">*</span></label>
+                        <input type="number" class="form-control" value="">
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label>Glycémie (g/L) <span class="text-danger">*</span></label>
+                        <input type="number" class="form-control">
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label>Diurese (L/j) <span class="text-danger">*</span></label>
+                        <input type="number" class="form-control" value="">
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label>Poids (en kg) <span class="text-danger">*</span></label>
+                        <input type="number" class="form-control">
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label>Taille (en m)<span class="text-danger">*</span></label>
+                        <input type="number" class="form-control" value="">
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label>IMC (kg/m²) <span class="text-danger">*</span></label>
+                        <input type="number" class="form-control">
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label>Tour taille (cm) <span class="text-danger">*</span></label>
+                        <input type="number" class="form-control" value="">
+                    </div>
+                </div>
+
+
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label>Tour hanche (cm) <span class="text-danger">*</span></label>
+                        <input type="number" class="form-control">
+                    </div>
+                </div>
+                <div class="text-center col-md-12 col-sm-12">
+                    <label for=""> <u> Examens </u> </label>
+                </div>
+
+                <div class="col-md-12">
+                    <div class="form-group mb-0">
+                        <label>Examen général</label>
+                        <textarea class="form-control" rows="2"></textarea>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <div class="form-group mb-3">
+                        <label>Examen appareil</label>
+                        <textarea class="form-control" rows="2"></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row form-row" *ngIf="currentStep===2">
+
+                <div class="col-md-12 mt-3">
+                    <div class="form-group mb-0">
+                        <label>Libellé biologie</label>
+                        <textarea class="form-control" rows="2"></textarea>
+                    </div>
+                </div>
+                <div class="col-md-12 mb-2">
+                    <div class="form-group">
+                        <label>Ajouter la pièce jointe </label>
+                        <ngx-dropzone>
+                            <ngx-dropzone-label>Drop files here to upload</ngx-dropzone-label>
+                            <ngx-dropzone-image-preview  [removable]="true">
+                            </ngx-dropzone-image-preview>
+                        </ngx-dropzone>
+                    </div>
+                    <div class="upload-wrap">
+                        <div class="upload-images">
+                            <img src="assets/img/features/feature-01.jpg" alt="Upload Image">
+                            <a href="javascript:void(0);" class="btn btn-icon btn-danger btn-sm"><i class="far fa-trash-alt"></i></a>
+                        </div>
+                        <div class="upload-images">
+                            <img src="assets/img/features/feature-02.jpg" alt="Upload Image">
+                            <a href="javascript:void(0);" class="btn btn-icon btn-danger btn-sm"><i class="far fa-trash-alt"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <div class="form-group mb-0">
+                        <label>Immunologie</label>
+                        <textarea class="form-control" rows="2"></textarea>
+                    </div>
+                </div>
+
+                <div class="col-md-12 mb-2">
+                    <div class="form-group">
+                        <label>Ajouter la pièce jointe </label>
+                        <ngx-dropzone>
+                            <ngx-dropzone-label>Drop files here to upload</ngx-dropzone-label>
+                            <ngx-dropzone-image-preview  [removable]="true">
+                            </ngx-dropzone-image-preview>
+                        </ngx-dropzone>
+                    </div>
+                    <div class="upload-wrap">
+                        <div class="upload-images">
+                            <img src="assets/img/features/feature-01.jpg" alt="Upload Image">
+                            <a href="javascript:void(0);" class="btn btn-icon btn-danger btn-sm"><i class="far fa-trash-alt"></i></a>
+                        </div>
+                        <div class="upload-images">
+                            <img src="assets/img/features/feature-02.jpg" alt="Upload Image">
+                            <a href="javascript:void(0);" class="btn btn-icon btn-danger btn-sm"><i class="far fa-trash-alt"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="col-md-12">
+                    <div class="form-group mb-0">
+                        <label>Imagerie</label>
+                        <textarea class="form-control" rows="2"></textarea>
+                    </div>
+                </div>
+                <div class="col-md-12 mb-2">
+                    <div class="form-group">
+                        <label>Ajouter la pièce jointe </label>
+                        <ngx-dropzone>
+                            <ngx-dropzone-label>Drop files here to upload</ngx-dropzone-label>
+                            <ngx-dropzone-image-preview  [removable]="true">
+                            </ngx-dropzone-image-preview>
+                        </ngx-dropzone>
+                    </div>
+                    <div class="upload-wrap">
+                        <div class="upload-images">
+                            <img src="assets/img/features/feature-01.jpg" alt="Upload Image">
+                            <a href="javascript:void(0);" class="btn btn-icon btn-danger btn-sm"><i class="far fa-trash-alt"></i></a>
+                        </div>
+                        <div class="upload-images">
+                            <img src="assets/img/features/feature-02.jpg" alt="Upload Image">
+                            <a href="javascript:void(0);" class="btn btn-icon btn-danger btn-sm"><i class="far fa-trash-alt"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <div class="form-group mb-3">
+                        <label>Anatomopathologie</label>
+                        <textarea class="form-control" rows="2"></textarea>
+                    </div>
+                </div>
+                <div class="col-md-12 mb-2">
+                    <div class="form-group">
+                        <label>Ajouter la pièce jointe </label>
+                        <ngx-dropzone>
+                            <ngx-dropzone-label>Drop files here to upload</ngx-dropzone-label>
+                            <ngx-dropzone-image-preview  [removable]="true">
+                            </ngx-dropzone-image-preview>
+                        </ngx-dropzone>
+                    </div>
+                    <div class="upload-wrap">
+                        <div class="upload-images">
+                            <img src="assets/img/features/feature-01.jpg" alt="Upload Image">
+                            <a href="javascript:void(0);" class="btn btn-icon btn-danger btn-sm"><i class="far fa-trash-alt"></i></a>
+                        </div>
+                        <div class="upload-images">
+                            <img src="assets/img/features/feature-02.jpg" alt="Upload Image">
+                            <a href="javascript:void(0);" class="btn btn-icon btn-danger btn-sm"><i class="far fa-trash-alt"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+               
+            </div>
+
+            <div class="row form-row" *ngIf="currentStep===3">
+                <h4 class="card-title mt-2 mb-2">Les médicaments</h4>
+                <hr>
+               
+                <a href="javascript:void(0);">
+                    <i class="fa fa-plus-circle"></i> Ajouter un médicament</a>
+               
+                <div class="row">
+
+                   
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>Choisir un médicament <span class="text-danger">*</span></label>
+                            <select class="form-control select">
+                                <option>Select</option>
+                                <option>Male</option>
+                                <option>Female</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>Psologie<span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" value="">
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>Nombre prise<span class="text-danger">*</span></label>
+                            <input type="number" class="form-control" value="">
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>Voie<span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" value="">
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <div class="form-group">
+                            <label>Est administré<span class="text-danger">*</span></label>
+                            <select class="form-control select">
+                                <option>Select</option>
+                                <option [value]="1">Oui</option>
+                                <option [value]="0">Non</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+             
+                <div class="col-md-12 col-sm-12">
+                    <div class="form-group mb-3">
+                        <label>Nom protocole</label>
+                        <input type="text" class="form-control" placeholder="protocole utilisé">
+                            
+                    </div>
+                </div>
+                <div class="col-md-12 mb-2">
+                    <div class="form-group">
+                        <label>Ajouter la pièce jointe du protocole </label>
+                        <ngx-dropzone>
+                            <ngx-dropzone-label>Drop files here to upload</ngx-dropzone-label>
+                            <ngx-dropzone-image-preview  [removable]="true">
+                            </ngx-dropzone-image-preview>
+                        </ngx-dropzone>
+                    </div>
+                    <div class="upload-wrap">
+                        <div class="upload-images">
+                            <img src="assets/img/features/feature-01.jpg" alt="Upload Image">
+                            <a href="javascript:void(0);" class="btn btn-icon btn-danger btn-sm"><i class="far fa-trash-alt"></i></a>
+                        </div>
+                        <div class="upload-images">
+                            <img src="assets/img/features/feature-02.jpg" alt="Upload Image">
+                            <a href="javascript:void(0);" class="btn btn-icon btn-danger btn-sm"><i class="far fa-trash-alt"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+               
+           
+            </div>
+
+            <div class="row form-row" *ngIf="currentStep===4">
+                <h4 class="mt-2 mb-2">Discussion</h4>
+                <hr>
+                <div class="col-md-12">
+                    <div class="form-group mb-3">
+                        <label>Résumé</label>
+                        <textarea class="form-control" rows="5"></textarea>
+                    </div>
+                </div>
+                
+            </div>
+
+            <div class="row form-row" *ngIf="currentStep===5">
+                <h4 class="mt-2 mb-2">Synthèse</h4>
+                <hr>
+                <div class="col-md-12">
+                    <div class="form-group mb-3">
+                        <label>Observation(s)</label>
+                        <textarea class="form-control" rows="5"></textarea>
+                    </div>
+                </div>
+                
+            </div>
+        
+
+            
+            <div class="buttons">
+                <button id="prev" disabled>Précédent</button>
+                <span style="width: 640px"></span>
+                <button id="next">Suivant</button>
+            </div>
+        </div>
+    </div>
+</div>
