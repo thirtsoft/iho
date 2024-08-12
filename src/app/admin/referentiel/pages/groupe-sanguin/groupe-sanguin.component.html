@@ -1,1 +1,154 @@
-<p>groupe-sanguin works!</p>
+<div class="page-wrapper">
+
+    <div class="content container-fluid">
+        <div class="page-header">
+            <div class="col-sm-7 col-auto">
+                <h3 class="page-title">Liste groupes sanguins</h3>
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a [routerLink]="'/admin/'">Tableau de bord</a></li>
+                    <li class="breadcrumb-item active">Groupe sanguin</li>
+                </ul>
+            </div>
+            <div class="col-sm-5 col">
+                <a (click)="openModal(template)" class="btn btn-primary float-right mt-2">Ajouter</a>
+            </div>
+        </div>
+        <!-- /Page Header -->
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="datatable table table-hover table-center mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+										<th>Code</th>
+										<th>Description</th>
+										<th class="text-right">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let groupeSanguin of groupeSanguins">
+										<td>{{groupeSanguin.id}}</td>
+										<td>{{groupeSanguin.code}}</td>
+										<td>{{groupeSanguin.description}}</td>
+
+                                        <td class="text-right">
+                                            <div class="actions">
+                                                <a class="btn btn-sm bg-success-light" data-toggle="modal"
+                                                    (click)="editModal(edittemplate,groupeSanguin)">
+                                                    <i class="fe fe-pencil"></i> Edit
+                                                </a>
+                                                <a data-toggle="modal" (click)="deleteModal(delete,groupeSanguin)"
+                                                    class="btn btn-sm bg-danger-light">
+                                                    <i class="fe fe-trash"></i> Delete
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                  
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #template>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">Ajouter</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="modalRef.hide()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form [formGroup]="groupeSanguinsFormGroup">
+			<input
+				type="text"
+				readonly="true"
+				hidden="true"
+				matInput
+				formControlName="id"
+         	/>
+            <div class="row form-row">
+                <div class="col-12">
+                    <div class="form-group">
+						<label>Code <span class="text-danger">*</span></label>
+                        <input type="text" formControlName="code" required placeholder="code" class="form-control">
+                    </div>
+                </div>          
+            </div>
+			<div class="row form-row">
+                <div class="col-12">
+                    <div class="form-group">
+						<label>Description <span class="text-danger">*</span></label>
+						<textarea name="" id="" formControlName="description"></textarea>
+                    </div>
+                </div>          
+            </div>
+        </form>
+        <div style="margin-top:25px">
+            <button type="button" class="btn btn-success si_accept_confirm" id="btn-yes" [disabled]="!groupeSanguinsFormGroup.valid" (click)="save()">Enregistrer</button>
+            <button type="button" class="btn btn-danger si_accept_cancel" (click)="decline()" >Annuler</button>
+        </div>
+    
+    </div>
+</ng-template>
+
+<ng-template #edittemplate>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">Modifier</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="modalRef.hide()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form [formGroup]="groupeSanguinsFormGroup">
+			<input
+				type="text"
+				readonly="true"
+				hidden="true"
+				matInput
+				formControlName="id"
+         	/>
+            <div class="row form-row">
+                <div class="col-12">
+                    <div class="form-group">
+						<label>Code <span class="text-danger">*</span></label>
+                        <input type="text" formControlName="code" required placeholder="code" class="form-control">
+                    </div>
+                </div>          
+            </div>
+			<div class="row form-row">
+                <div class="form-group">
+					<label>Description <span class="text-danger">*</span></label>
+					<textarea name="" id="" formControlName="description"></textarea>
+				</div>   
+            </div>
+        </form>
+        <div style="margin-top:25px">
+            <button type="button" class="btn btn-success si_accept_confirm" id="btn-yes" (click)="editer()">Enregistrer</button>
+            <button type="button" class="btn btn-danger si_accept_cancel" (click)="decline()" >Annuler</button>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #delete>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">Delete</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="modalRef.hide()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body text-center">
+        étes-vous sur de vouloir supprimer ce goupe sanguin  ?
+      <div style="margin-top:25px">
+        <button type="button" class="btn btn-default" (mouseover)="btnColor()" id="btn-yes" (click)="deleteGroupeSanguin()" >Yes</button>
+        <button type="button" class="btn btn-primary" (mouseover)="btnColorNo()" id="btn-no" (click)="decline()" >No</button>
+      </div>
+    </div>
+</ng-template>

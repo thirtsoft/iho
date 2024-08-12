@@ -10,6 +10,7 @@ import { ChambreComponent } from './pages/chambre/chambre.component';
 import { GroupeSanguinComponent } from './pages/groupe-sanguin/groupe-sanguin.component';
 import { TrancheAgeComponent } from './pages/tranche-age/tranche-age.component';
 import { ServicesPartenaireComponent } from './pages/services-partenaire/services-partenaire.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -25,7 +26,9 @@ import { ServicesPartenaireComponent } from './pages/services-partenaire/service
   ],
   imports: [
     CommonModule,
-    ReferentielRoutingModule
+    ReferentielRoutingModule,
+    ReactiveFormsModule,
+    FormsModule
   ]
 })
 export class ReferentielModule { }
