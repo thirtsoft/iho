@@ -3,9 +3,9 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
- // production: true,
   production: false,
-  apiBaseUrl: "http://localhost:8081/sen-ouvrier/v1"
+  apiBaseUrl: 'http://localhost:8094/iho/api',
+  apiLogin: 'http://localhost:8094/iho/api/auth',
 };
 
 /*
