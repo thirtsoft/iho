@@ -2,15 +2,20 @@
 
     <div class="content container-fluid">
         <div class="page-header">
-            <div class="col-sm-7 col-auto">
-                <h3 class="page-title">Médicaments</h3>
-				<ul class="breadcrumb">
-				    <li class="breadcrumb-item"><a [routerLink]="'/admin/'">Tableau de bord</a></li>
-					<li class="breadcrumb-item active">Liste des médicaments</li>
-				</ul>
-            </div>
-            <div class="col-sm-5 col">
-                <a (click)="openModal(template)" class="btn btn-primary float-right mt-2">Ajouter</a>
+            <div class="row">
+                <div class="col-sm-7 col-auto">
+                    <h3 class="page-title">Médicaments</h3>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a [routerLink]="'/admin/'">Tableau de bord</a></li>
+                        <li class="breadcrumb-item active">Liste médicaments</li>
+                    </ul>
+                </div>
+                <div class="col-sm-5 col">
+                    <a  class="btn btn-primary float-right mt-2" data-toggle="modal"
+                        (click)="openModal(template)">
+                         Ajouter
+                    </a>
+                </div>
             </div>
         </div>
         <!-- /Page Header -->
@@ -26,7 +31,7 @@
 										<th>code</th>
 										<th>Libellé</th>
 										<th>Categorie</th>
-										<th class="text-right">Actions</th>
+                                        <th class="text-right">Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -167,7 +172,7 @@
         </button>
     </div>
     <div class="modal-body text-center">
-        étes-vous sur de vouloir supprimer ce medicament  ?
+        étes-vous sur de vouloir supprimer ce medicament ?
       <div style="margin-top:25px">
         <button type="button" class="btn btn-default" (mouseover)="btnColor()" id="btn-yes" (click)="deleteMedicament()" >Oui</button>
         <button type="button" class="btn btn-primary" (mouseover)="btnColorNo()" id="btn-no" (click)="decline()" >No</button>

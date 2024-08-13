@@ -170,6 +170,35 @@
 				<li [class.active]="page === 'Transactions'">
 					<a (click)="change('Transactions')" [routerLink]="'/admin/transactions'"><i class="fe fe-activity"></i> <span>Transactions</span></a>
 				</li>
+				<li class="submenu">
+					<a href="javascript:void(0)"><i class="fe fe-vector"></i> <span> Paramétrage </span> <span class="menu-arrow"></span></a>
+					<ul style="display: none;">
+						<li [class.active]="page === 'Categories-Medicaments'"> 
+							<a (click)="change('Categories-Medicaments')" [routerLink]="'referentiels/categories-medicaments'"><i class="fe fe-vector"></i> &nbsp;  <span>Catégorie médicaments</span></a>
+						</li>
+						<li [class.active]="page === 'Medicaments'"> 
+							<a (click)="change('Medicaments')" [routerLink]="'referentiels/medicaments'"><i class="fe fe-vector"></i> &nbsp; <span>Médicaments</span></a>
+						</li>
+						
+						<li [class.active]="page === 'Chambres'"> 
+							<a (click)="change('Chambres')" [routerLink]="'referentiels/chambres'"><i class="fe fe-layout"></i>&nbsp; <span>Chambre</span></a>
+						</li>
+						<li [class.active]="page === 'Lits'"> 
+							<a (click)="change('Lits')" [routerLink]="'referentiels/lits'"><i class="fe fe-layout"></i> &nbsp; <span>Lits</span></a>
+						</li>
+						<li [class.active]="page === 'Services'"> 
+							<a (click)="change('Services')" [routerLink]="'referentiels/services'"><i class="fe fe-layout"></i>&nbsp; <span>Service</span></a>
+						</li>
+						<li [class.active]="page === 'Tranche-Ages'"> 
+							<a (click)="change('Tranche-Ages')" [routerLink]="'referentiels/tranche-ages'"><i class="fe fe-layout"></i>&nbsp; <span>Tranche-Ages</span></a>
+						</li>
+
+						<li [class.active]="page === 'Groupe-Sanguins'"> 
+							<a (click)="change('Groupe-Sanguins')" [routerLink]="'referentiels/groupe-sanguins'"><i class="fe fe-layout"></i>&nbsp; <span>Groupe sanguins</span></a>
+						</li>
+						
+					</ul>
+				</li>
 				<li  [class.active]="page === 'Settings'">
 					<a (click)="change('Settings')" [routerLink]="'/admin/settings'"><i class="fe fe-vector"></i> <span>Settings</span></a>
 				</li>

@@ -6,6 +6,7 @@ import { Utilisateur } from 'src/app/models/utilisateur';
 import { CommonServiceService } from 'src/app/common-service.service';
 import { PatientService } from '../../service/patient.service';
 import { Router } from '@angular/router';
+import { LocalStorageService } from 'src/app/admin/pages/services/local-storage.service';
 
 @Component({
   selector: 'app-list-patient',
@@ -54,13 +55,13 @@ export class ListPatientComponent implements OnInit {
   constructor(public commonService: CommonServiceService,
               private patientService: PatientService,
        //       private circuitService: CircuitPatientService,
-        //      private localStorage: LocalStorageService,
+              private localStorage: LocalStorageService,
               private router: Router,
               private _formBuilder: FormBuilder,
               private modalService: BsModalService
   ) { 
-  //  this.userId = this.localStorage.getItem('id');
-  //  this.matricule = this.localStorage.getItem('matricule');
+    this.userId = this.localStorage.getItem('id');
+    this.matricule = this.localStorage.getItem('matricule');
   }
 
   ngOnInit(): void {

@@ -2,15 +2,20 @@
 
     <div class="content container-fluid">
         <div class="page-header">
-            <div class="col-sm-7 col-auto">
-                <h3 class="page-title">Liste groupes sanguins</h3>
-                <ul class="breadcrumb">
-                    <li class="breadcrumb-item"><a [routerLink]="'/admin/'">Tableau de bord</a></li>
-                    <li class="breadcrumb-item active">Groupe sanguin</li>
-                </ul>
-            </div>
-            <div class="col-sm-5 col">
-                <a (click)="openModal(template)" class="btn btn-primary float-right mt-2">Ajouter</a>
+            <div class="row">
+                <div class="col-sm-7 col-auto">
+                    <h3 class="page-title">Groupes sanguins</h3>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a [routerLink]="'/admin/'">Tableau de bord</a></li>
+                        <li class="breadcrumb-item active">Liste groupes sanguins</li>
+                    </ul>
+                </div>
+                <div class="col-sm-5 col">
+                    <a  class="btn btn-primary float-right mt-2" data-toggle="modal"
+                        (click)="openModal(template)">
+                         Ajouter
+                    </a>
+                </div>
             </div>
         </div>
         <!-- /Page Header -->
@@ -25,7 +30,7 @@
                                         <th>#</th>
 										<th>Code</th>
 										<th>Description</th>
-										<th class="text-right">Actions</th>
+                                        <th class="text-right">Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -147,7 +152,7 @@
     <div class="modal-body text-center">
         étes-vous sur de vouloir supprimer ce goupe sanguin  ?
       <div style="margin-top:25px">
-        <button type="button" class="btn btn-default" (mouseover)="btnColor()" id="btn-yes" (click)="deleteGroupeSanguin()" >Yes</button>
+        <button type="button" class="btn btn-default" (mouseover)="btnColor()" id="btn-yes" (click)="deleteGroupeSanguin()" >Oui</button>
         <button type="button" class="btn btn-primary" (mouseover)="btnColorNo()" id="btn-no" (click)="decline()" >No</button>
       </div>
     </div>

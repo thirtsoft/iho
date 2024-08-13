@@ -30,7 +30,7 @@ export class UtilsService {
     this.localStorage.setItem('role', response.profilReponse.code);
     this.localStorage.setItem('permissions', JSON.stringify(response.profilReponse.actionListResponses));
     if (this.role) {
-      this.router.navigateByUrl('/admin/patients');
+      this.router.navigateByUrl('/admin');
       return;
     }
     this.router.navigate([urlNavigation]);

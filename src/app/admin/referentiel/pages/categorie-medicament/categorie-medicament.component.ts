@@ -45,8 +45,10 @@ export class CategorieMedicamentComponent implements OnInit {
 
 
   getCategorieMedicaments() {
+    console.log("Before");
     this.referentielService.getAllCategoriesMedicaments().subscribe(
       (data: any[]) => {
+        console.log("After")
         this.categoriesMedicamenets = data;
         $(function () {
           $('table').DataTable();

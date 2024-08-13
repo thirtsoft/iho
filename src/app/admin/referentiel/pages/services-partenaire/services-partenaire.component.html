@@ -2,15 +2,20 @@
 
     <div class="content container-fluid">
         <div class="page-header">
-            <div class="col-sm-7 col-auto">
-                <h3 class="page-title">Services partenaires</h3>
-				<ul class="breadcrumb">
-				    <li class="breadcrumb-item"><a [routerLink]="'/admin/'">Tableau de bord</a></li>
-					<li class="breadcrumb-item active">Liste des services partenaires</li>
-				</ul>
-            </div>
-            <div class="col-sm-5 col">
-                <a (click)="openModal(template)" class="btn btn-primary float-right mt-2">Ajouter</a>
+            <div class="row">
+                <div class="col-sm-7 col-auto">
+                    <h3 class="page-title">Services partenaire</h3>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a [routerLink]="'/admin/'">Tableau de bord</a></li>
+                        <li class="breadcrumb-item active">Liste services partenaire</li>
+                    </ul>
+                </div>
+                <div class="col-sm-5 col">
+                    <a  class="btn btn-primary float-right mt-2" data-toggle="modal"
+                        (click)="openModal(template)">
+                         Ajouter
+                    </a>
+                </div>
             </div>
         </div>
         <!-- /Page Header -->
@@ -26,7 +31,7 @@
 										<th>Code</th>
 										<th>Libellé</th>
 										<th>Description</th>
-										<th class="text-right">Actions</th>
+                                        <th class="text-right">Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -34,7 +39,8 @@
 										<td>{{servicePartenaire.id}}</td>
 										<td>{{servicePartenaire.code}}</td>
 										<td>{{servicePartenaire.libelle}}</td>
-										<td>{{servicePartenaire.description}}</td>		
+										<td>{{servicePartenaire.description}}</td>	
+
                                         <td class="text-right">
                                             <div class="actions">
                                                 <a class="btn btn-sm bg-success-light" data-toggle="modal"
@@ -161,7 +167,7 @@
         </button>
     </div>
     <div class="modal-body text-center">
-        étes-vous sur de vouloir supprimer ce service partenaire  ?
+        étes-vous sur de vouloir supprimer ce service partenaire ?
       <div style="margin-top:25px">
         <button type="button" class="btn btn-default" (mouseover)="btnColor()" id="btn-yes" (click)="deleteServicePartenaire()" >Oui</button>
         <button type="button" class="btn btn-primary" (mouseover)="btnColorNo()" id="btn-no" (click)="decline()" >No</button>

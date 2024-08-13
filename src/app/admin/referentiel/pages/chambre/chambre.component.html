@@ -6,8 +6,8 @@
                 <div class="col-sm-7 col-auto">
                     <h3 class="page-title">Chambres</h3>
                     <ul class="breadcrumb">
-                        <li class="breadcrumb-item"><a [routerLink]="'/admin/'">Dashboard</a></li>
-                        <li class="breadcrumb-item active">Chambres</li>
+                        <li class="breadcrumb-item"><a [routerLink]="'/admin/'">Tableau de bord</a></li>
+                        <li class="breadcrumb-item active">Liste chambres</li>
                     </ul>
                 </div>
                 <div class="col-sm-5 col">
@@ -173,7 +173,7 @@
     <div class="modal-body text-center">
         étes-vous sur de vouloir supprimer cette chambre ?
       <div style="margin-top:25px">
-        <button type="button" class="btn btn-default" (mouseover)="btnColor()" id="btn-yes" (click)="deleteChambre()" >Yes</button>
+        <button type="button" class="btn btn-default" (mouseover)="btnColor()" id="btn-yes" (click)="deleteChambre()" >Oui</button>
         <button type="button" class="btn btn-primary" (mouseover)="btnColorNo()" id="btn-no" (click)="decline()" >No</button>
       </div>
     </div>

@@ -7,7 +7,8 @@ import { CreateProfilComponent } from './pages/create-profil/create-profil.compo
 import { CreateActionComponent } from './pages/create-action/create-action.component';
 import { ListActionComponent } from './pages/list-action/list-action.component';
 import { ListProfilComponent } from './pages/list-profil/list-profil.component';
-
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,10 @@ import { ListProfilComponent } from './pages/list-profil/list-profil.component';
   ],
   imports: [
     CommonModule,
-    ProfilRoutingModule
+    ProfilRoutingModule,
+    FormsModule,
+    ReactiveFormsModule,
+    NgSelectModule
   ]
 })
 export class ProfilModule { }

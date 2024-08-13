@@ -226,7 +226,7 @@ const routes: Routes = [
       },
 
       {
-        path: 'referentiel',
+        path: 'referentiels',
         loadChildren: () =>
           import('./referentiel/referentiel.module').then((m) => m.ReferentielModule),
       },

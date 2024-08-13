@@ -47,10 +47,12 @@ export class AdminComponent implements OnInit {
     });
   }
   ngOnInit(): void {
+    /*
     this.commonService.nextmessage('admin');
     let scope = this;
     setTimeout(() => {
       scope.Router.navigateByUrl('/admin/dashboard');
     }, 100);
+    */
   }
 }

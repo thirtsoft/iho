@@ -2,15 +2,20 @@
 
     <div class="content container-fluid">
         <div class="page-header">
-            <div class="col-sm-7 col-auto">
-                <h3 class="page-title">Tranches d'ages</h3>
-				<ul class="breadcrumb">
-				    <li class="breadcrumb-item"><a [routerLink]="'/admin/'">Tableau de bord</a></li>
-					<li class="breadcrumb-item active">Liste des tranches d'ages</li>
-				</ul>
-            </div>
-            <div class="col-sm-5 col">
-                <a (click)="openModal(template)" class="btn btn-primary float-right mt-2">Ajouter</a>
+            <div class="row">
+                <div class="col-sm-7 col-auto">
+                    <h3 class="page-title">Trnahces d'ages</h3>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a [routerLink]="'/admin/'">Tableau de bord</a></li>
+                        <li class="breadcrumb-item active">Liste tranches ages</li>
+                    </ul>
+                </div>
+                <div class="col-sm-5 col">
+                    <a  class="btn btn-primary float-right mt-2" data-toggle="modal"
+                        (click)="openModal(template)">
+                         Ajouter
+                    </a>
+                </div>
             </div>
         </div>
         <!-- /Page Header -->
@@ -25,14 +30,15 @@
                                         <th>#</th>
 										<th>Code</th>
 										<th>Libelle</th>
-										<th class="text-right">Actions</th>
+                                        <th class="text-right">Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr *ngFor="let trancheAge of trancheAges">
 										<td>{{trancheAge.id}}</td>
 										<td>{{trancheAge.code}}</td>
-										<td>{{trancheAge.libelle}}</td>		
+										<td>{{trancheAge.libelle}}</td>	
+
                                         <td class="text-right">
                                             <div class="actions">
                                                 <a class="btn btn-sm bg-success-light" data-toggle="modal"
@@ -94,6 +100,7 @@
             <button type="button" class="btn btn-success si_accept_confirm" id="btn-yes" [disabled]="!trancheAgeFormGroup.valid" (click)="save()">Enregistrer</button>
             <button type="button" class="btn btn-danger si_accept_cancel" (click)="decline()" >Annuler</button>
         </div>
+    
     </div>
 </ng-template>
 
@@ -145,7 +152,7 @@
         </button>
     </div>
     <div class="modal-body text-center">
-        étes-vous sur de vouloir supprimer cette tranche d'age  ?
+        étes-vous sur de vouloir supprimer cette tranche d'age ?
       <div style="margin-top:25px">
         <button type="button" class="btn btn-default" (mouseover)="btnColor()" id="btn-yes" (click)="deleteTrancheAge()" >Oui</button>
         <button type="button" class="btn btn-primary" (mouseover)="btnColorNo()" id="btn-no" (click)="decline()" >No</button>

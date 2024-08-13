@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -19,10 +19,19 @@ export class ReferentielService {
   baseUrl_1 = environment.apiBaseUrl;
   referentiel = this.baseUrl_1 + '/referentiel';
 
+  httpOptions = {
+    headers: new HttpHeaders({
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    })
+  }
+
   constructor(private http: HttpClient) { }
 
   getAllCategoriesMedicaments(): Observable<CategorieMedicament[]> {
-    return this.http.get<CategorieMedicament[]>(`${this.referentiel}/categorymedicament/list`);
+    console.log('getAllCategoriesMedic', this.http);
+    console.log('referentiel', this.referentiel);
+    return this.http.get<CategorieMedicament[]>(`${this.referentiel}/categorymedicament/list`, this.httpOptions);
   }
 
   getCategorieMedicament(id: number): Observable<CategorieMedicament> {

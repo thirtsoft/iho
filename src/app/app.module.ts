@@ -6,8 +6,8 @@ import { AppComponent } from './app.component';
 import { HeaderComponent } from './common/header/header.component';
 import { FooterComponent } from './common/footer/footer.component';
 
-import { HttpClientModule } from '@angular/common/http';
-import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+//import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { DataService } from './data.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
@@ -27,6 +27,7 @@ import { Home6headerComponent } from './common/home6header/home6header.component
 import { Home6footerComponent } from './common/home6footer/home6footer.component';
 import { Home7headerComponent } from './common/home7header/home7header.component';
 import { Home7footerComponent } from './common/home7footer/home7footer.component';
+import { InterceptorService } from './admin/pages/helper/interceptor.service';
 
 
 @NgModule({
@@ -37,7 +38,7 @@ import { Home7footerComponent } from './common/home7footer/home7footer.component
     HttpClientModule,
     SlickCarouselModule,
     ToastrModule.forRoot(),
-    HttpClientInMemoryWebApiModule.forRoot(DataService),
+ //   HttpClientInMemoryWebApiModule.forRoot(DataService),
     BrowserAnimationsModule,
     FormsModule,
     NgbModule,
@@ -45,7 +46,13 @@ import { Home7footerComponent } from './common/home7footer/home7footer.component
     NgSelect2Module,
     NgApexchartsModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: InterceptorService,
+      multi: true,
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

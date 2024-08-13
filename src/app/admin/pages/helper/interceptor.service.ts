@@ -4,7 +4,8 @@ import { LocalStorageService } from '../services/local-storage.service';
 import { Router } from '@angular/router';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { isString } from '@ng-bootstrap/ng-bootstrap/util/util';
+import { isString } from 'util';
+
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +17,7 @@ export class InterceptorService implements HttpInterceptor {
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const token = this.localStorage.getItem('token');
     console.log("Token", token);
+    console.log("request", request);
     if (token && !request.url.includes('/iho/api/auth/authenticate')) {
       request = request.clone({
         headers : request.headers.set('Authorization', 'Bearer '+token)
