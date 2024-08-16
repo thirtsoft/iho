@@ -1,17 +1,25 @@
-import { Component, OnInit, TemplateRef } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ChangeDetectorRef, Component, OnInit, TemplateRef } from '@angular/core';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { Observable } from 'rxjs';
 import { CommonServiceService } from 'src/app/common-service.service';
-
-// @ts-ignore 
-//import  { Hospitalisation } from './globalpayments-3ds/globalpayments-3ds.esm.js';
-
-enum EntrepriseFileType {
-  CNI = 1,
-  RCCM 
-}
+import { Location } from '@angular/common';
+import { Hospitalisation } from '../../models/hospitalisation';
+import { ObservationClinique } from '../../models/observation-clinique';
+import { ExamenComplementaire } from '../../models/examen-complementaire';
+import { TraitementMedical } from '../../models/traitement-medical';
+import { Medicament } from 'src/app/admin/referentiel/models/medicament';
+import { Discussion } from '../../models/discussion';
+import { Synthese } from '../../models/synthese';
+import { CircuitPatient } from 'src/app/admin/dossier-medical/models/circuit-patient';
+import { Utilisateur } from 'src/app/models/utilisateur';
+import { Patient } from 'src/app/admin/patient/model/patient';
+import { HospitalisationService } from '../../service/hospitalisation.service';
+import { PatientService } from 'src/app/admin/patient/service/patient.service';
+import { CircuitPatientService } from 'src/app/admin/dossier-medical/service/circuit-patient.service';
+import { LocalStorageService } from 'src/app/admin/pages/services/local-storage.service';
+import { ReferentielService } from 'src/app/admin/referentiel/service/referentiel.service';
 
 @Component({
   selector: 'app-create-hospitalisation',
@@ -20,321 +28,559 @@ enum EntrepriseFileType {
 })
 export class CreateHospitalisationComponent implements OnInit {
 
-  promoteurId: number | undefined;
-  userId: any;
+  
+  hospitalisation: Hospitalisation;
 
-  today = new Date();
+  editHospitalisation: Hospitalisation;
 
-  typeCompta = ['Système Minimal de Trésorerie','Système Normal']
+  observationClinique: ObservationClinique;
 
-  nineaObservable!: Observable<String>;
+  examenComplementaire: ExamenComplementaire = {};
 
-  irccObservable!: Observable<String>;
+  traitement!: TraitementMedical;
+  medicaments: Medicament[] = [];
+  filteredMedicaments:  Medicament[] = [];
 
-  idEnterpriseToEdit: any;
+  discussion: Discussion = {};
+
+  synthese: Synthese = {};
+
+  circuit: CircuitPatient = {};
+
+  paramId: any = 0;
+
+  codePatient?: string;
+
+  userId: number;
+
+  utilisateur: Utilisateur;
+
+  matricule?: string;
+
+  hospitalisationId?: number;
+
+  patient?: Patient;
+
+  patientList?: Patient [];
+
 
   addOnBlur = true;
-
-  addOnBlurFini = true;
-
-
 //  readonly separatorKeysCodes = [ENTER, COMMA] as const;
 
-  produits: string[] = [];
-  filteredFormeJuridiques: any = [];
-  formeJuridiques: any [];
-  selectedSearchValues: any[] = [];
+  libellesMotifs: string[] = [];
+  maladiesAntecedents: string[] = [];
+  chirurgiesAntecedent: string[] = [];
+  gynecologiquesAntecedent: string[] = [];
+  familialsAntecedentAscendant: string[] = [];
+  familialsAntecedentCollateral: string[] = [];
+  familialsAntecedentDescendant: string[] = [];
+  examensGenerals: string[] = [];
+  examensAppareils: string[] = [];
+  listModeVies: string[] = [];
 
-  groupeSecteurs: any;
+  patientFormGroup: FormGroup;
 
-  secteurActivites?: any;
+  observationCliniqueFormGroup!: FormGroup;
 
-  departements: any;
+  examenComplementaireFormGroup!: FormGroup;
 
-  communes: any;
+  traitementFormGroup!: FormGroup;
 
-  arrondissements: any;
+  discussionFormGroup!: FormGroup;
 
-  qualites: any;
+  syntheseFormGroup!: FormGroup;  
 
-  niveauEducations: any;
+  protocoleFile!: File;
+  protocoleFilename!: string;
 
-  quartiers: any;
+  biologieFile!: File;
+  biologieFilename!: string;
 
+  immunologieFile!: File;
+  immunologieFilename!: string;
 
-  dateCurrentYear = new Date().getFullYear() - 1;
+  imagerieFile!: File;
+  imagerieFilename!: string;
 
+  anatomopathologieFile!: File;
+  anatomopathologieFilename!: string;
 
-  entrepriseId: number;
+  currentStep: number = 0;
 
-  createButton = 'Créer'
+  endStep: boolean = false;
 
-  pointFocalFormGroup: FormGroup;
-
-  isPromoteur: boolean = false;
-
-  isOnEdit: boolean = false;
-
-  role: string;
-
-  formeJuriqueNondefinie = 3;
-  isNonDefinie = 0;
-
-  loading: boolean = false;
-
-  selected = "1";
-
-  dataQualite;
-
-  libellesSexe: string[] = ['Homme', 'Femme'];
-  identificationFormGroup: FormGroup;
-  demandeId: number;
-  pmId: number;
-  produit: string;
-  initializedForm: boolean;
-  isPointFocalFormInitialized: boolean;
-  cniFilename: string;
-  rccmFilename: string;
-  cniFile: File;
-  rccmFile: File;
-
-
-  constructor(
-    private _formBuilder: FormBuilder, 
-    private router: Router,
-    private activatedRoute: ActivatedRoute
+  constructor(private hospitalisationService: HospitalisationService,
+    private patientService: PatientService,
+    private referentielService: ReferentielService,
+    private circuitService: CircuitPatientService,
+    private localStorage: LocalStorageService,
+  //  private toastr: ToastrService,
+    public _formBuilder: FormBuilder,
+    public router: Router,
+    private activatedRoute: ActivatedRoute,
+    private ref: ChangeDetectorRef,
+  //  public dialog: MatDialog,
+    public location: Location,
   ) {
-    this.idEnterpriseToEdit = Number(this.activatedRoute.snapshot.paramMap.get('id'));
-    this.demandeId = Number(this.activatedRoute.snapshot.paramMap.get('demandeId'));
+    this.userId = this.localStorage.getItem('id');
+    this.hospitalisationId = Number(this.activatedRoute.snapshot.paramMap.get('id'));
+    this.paramId = this.activatedRoute.snapshot.paramMap.get('id');
+  //  this.codePatient = this.localStorage.getItem('codePatient');
   }
+
 
   ngOnInit(): void {
     this.formateJS();
-    
-  }
-
-
-  private getValue(event: any) {
-    if (event instanceof Event) return +(event.target as HTMLSelectElement).value;
-    else return +event;
-  }
-
-  changeFormeJuridique(event: any){
-    const valeur = event.value;
-    if (valeur === this.formeJuriqueNondefinie) {
-      this.isNonDefinie=1;
-    }else{
-      this.isNonDefinie=0;
+    this.initpatientFormGroup();
+    this.initObservationCliniqueFormGroup();
+    this.initExamenComplementaireFormGroup();
+    this.initTraitementFormGroup();
+    this.initDiscussionFormGroup();
+    this.initSyntheseFormGroup();
+   
+    if (this.codePatient != null) {
+      this.getPatientByIndex(this.codePatient);
+      this.getCircuitByPatient(this.codePatient);
+    }
+    this.getMedicaments();
+    this.getPatients();
+    if (this.paramId && this.paramId > 0) {
+      this.getHospitalisation(this.paramId);
     }
   }
 
-  chargerSecteurActivite(event: any) {
-    let groupe = this.getValue(event);
-    this.getSecteurActivitesByGroupeActivite(groupe)
-  }
-
-  getSecteurActivitesByGroupeActivite(groupeActiviteId: number){
-  }
-
-  chargerCommunes(event: any) {
-    let departement = this.getValue(event)
-    this.getCommunesByDpartement(departement)
-  }
-
-  getCommunesByDpartement(departementId: number){
-  }
-
-  chargerArrondissements(event: any) {
-    let commune = this.getValue(event)
-    this.getArrondissementByCommunes(commune)
-  }
-
-  getArrondissementByCommunes(communeId: number){
-  }
-  
-  changerQuartiers(event: any) {
-    let arrond = this.getValue(event);
-    this.getQuartiersByArrondissement(arrond)
-  }
-
-  getQuartiersByArrondissement(arrondissementId: number){
-
-  }
-
-  add(event: any): void {
-    event.preventDefault();
-    event.stopPropagation();
-    if (this.produit === '') return
-    if(!this.produits)
-          this.produits = [];
-    this.produits.push(this.produit.trim());
-    this.produit = '';
-  }
-
-  remove(produit: string): void {
-    const index = this.produits.indexOf(produit);
-    if (index >= 0) {
-      this.produits.splice(index, 1);
-    }
-  }
-
-
-  private getDemande(demandeId: number) {
-  }
-  
-  initEntrepriseIdentificationFormGroup(pme: any|null) {
-    this.identificationFormGroup = this._formBuilder.group({
-      denomination: [pme?.denomination ?? '', Validators.required],
-      rccm: [pme?.rccm ?? '', Validators.required],
-      ifu: [pme?.ifu ?? '', Validators.required],
-      sigle: [pme?.sigle ?? '', Validators.required],
-      formeJuridique: [pme?.formeJuridiqueDTO?.id ?? '', Validators.required],
-      dateCreation: [ pme?.dateCreation ? this.formatDate(new Date(pme?.dateCreation)) : '', Validators.required],
-      domaineActiviteId: [pme?.domaineActiviteId ?? '', Validators.required], 
-      secteurActiviteId: [pme?.secteurActiviteId ?? '', Validators.required],
-      effectif: [pme?.effectif ?? '', Validators.required], 
-      capitalSocial: [pme?.capitalSocial ?? ''],
-      typeComptabilite: [pme?.typeComptabilite ?? '', Validators.required],
-      departementId: [pme?.departementId ?? '', Validators.required], 
-      communeId: [pme?.communeId ?? '', Validators.required],
-      arrondissementId: [pme?.arrondissementId ?? '', Validators.required], 
-      quartierId: [pme?.quartierId ?? '', Validators.required],
-      email: [pme?.email ?? '', Validators.required], 
-      adresse: [pme?.adresse ?? '', Validators.required],
-      boitePostale: [pme?.boitePostale ?? ''],
-      complementId: [pme?.complementId ?? ''], 
-      site: [pme?.site ?? ''],
-      tenuComptRegulier: [pme?.tenuComptRegulier ?? '', Validators.required]   ,
-      id: [pme?.id ?? ''],
-      dirigePar: [pme?.dirigePar ?? '0']
-      });
-      this.initializedForm = true;
-    }
-
-  initPointFocalFormGroup(pointFocal: any | null) {
-    const id = pointFocal?.id;
-    const nom = pointFocal?.nom;
-    const prenom = pointFocal?.prenom;
-    const sexe = pointFocal?.sexe;
-    const email = pointFocal?.email;
-    const telephone = pointFocal?.telephone;
-    const qualite = pointFocal?.qualite;
-    const entrepriseId = pointFocal?.entrepriseId;
-    const dateNaissance = pointFocal?.dateNaissance;
-    const niveauEducation = pointFocal?.niveauEducation;
-    this.pointFocalFormGroup = this._formBuilder.group({
-      id: [id ? id : null],
-      entrepriseId: [entrepriseId ? entrepriseId : '', Validators.required],
-      nom: [nom ? nom : '', Validators.required],
-      prenom: [prenom ? prenom : '', Validators.required],
-      sexe: [sexe ? sexe : '', Validators.required],
-      email: [email ? email : '', Validators.required],
-      telephone: [telephone ? telephone : '', Validators.required],
-      qualite: [qualite ? qualite : '', Validators.required],
-      dateNaissance: [dateNaissance ? this.formatDate(new Date(dateNaissance)) : '', Validators.required],
-      niveauEducation: [niveauEducation ? niveauEducation : ''],
+  initpatientFormGroup() {
+    this.patientFormGroup = this._formBuilder.group({
+      code: ['', Validators.required],
     });
-    this.isPointFocalFormInitialized = true;
   }
 
-  private fillPointFocal(promoteur: any) {
-    this.pointFocalFormGroup.get('id').setValue(null);
-    this.pointFocalFormGroup.get('nom').setValue(promoteur?.nom);
-    this.pointFocalFormGroup.get('prenom').setValue(promoteur?.prenom);
-    this.pointFocalFormGroup.get('sexe').setValue(promoteur?.sexe);
-    this.pointFocalFormGroup.get('email').setValue(promoteur?.email);
-    this.pointFocalFormGroup.get('qualite').setValue(promoteur?.qualite);
-    this.pointFocalFormGroup.get('telephone').setValue(promoteur?.telephone); 
-    this.pointFocalFormGroup.get('dateNaissance').setValue(new Date (promoteur?.dateNaissance));
-    this.pointFocalFormGroup.get('niveauEducation').setValue(promoteur?.niveauEducation);
+  initObservationCliniqueFormGroup() {
+    this.observationCliniqueFormGroup = this._formBuilder.group({
+      histoireMaladie: [''],
+      motifsHospitalisation: [''],
+      antecedentDs: this._formBuilder.group({
+        antecedentsMedicaux: [''],
+        antecedentsChirurgicaux: [''],
+        antecedentsGynecologiques: [''],
+        antecedentsFamilialsAscendant: [''],
+        antecedentsFamilialsCollateral: [''],
+        antecedentsFamilialsDescendant: [''],
+        modeVies: [''],
+      }),
+      examenPhysiqueDs: this._formBuilder.group({
+        examenGeneral: [],
+        examenAppareil: [],
+        pressionArterielS: [],
+        pressionArterielD: [],
+        temperature: [],
+        frequenceC: [],
+        frequenceR: [],
+        saturationOxygene: [],
+        diurese: [],
+        poids: [],
+        taille: [],
+        imc: [],
+        tourTaille: [],
+        tourHanche: [],
+        glycemie: [],
+      }),
+    });
   }
-  
-  isPointFocalPromoteur(event: any) {
-    if (event.target.checked) {
-      this.initPointFocal();
-      this.isPromoteur = true;
-      
+
+  initExamenComplementaireFormGroup() {
+    this.examenComplementaireFormGroup = this._formBuilder.group({
+      biologie: [],
+      biologieFileName: [''],
+      immunologie: [''],
+      immunologieFileName: [''],
+      imagerie: [''],
+      imagerieFileName: [''],
+      anatomopathologie: [''],
+      anatomopathologieFileName: [''],
+    });
+  }
+
+  initTraitementFormGroup() {
+    this.traitementFormGroup = this._formBuilder.group({
+      protocole: [''],
+      protocoleFileName: [''],
+      traitementMedicalItemDs: this._formBuilder.array([
+        this.newTraitementMedicalItem()
+      ])
+    });
+  }
+
+  initDiscussionFormGroup() {
+    this.discussionFormGroup = this._formBuilder.group({
+      id: [],
+      resume: ['', Validators.required],
+    });
+  }
+
+  initSyntheseFormGroup() {
+    this.syntheseFormGroup = this._formBuilder.group({
+      id: [],
+      observation: ['', Validators.required],
+    });
+  }
+
+  getPatientByIndex(code: string) {
+    this.patientService.getPatientByIndex(code).subscribe(
+      {
+        next: (response) => {
+          this.patient = response;
+        }
+      }
+    );
+  }
+
+  getCircuitByPatient(code?: string) {
+    this.circuitService.getCircuitPatientByPatient(code).subscribe(
+      {
+        next: (response) => {
+          this.circuit = response;
+        }
+      }
+    );
+  }
+
+  getPatients() {
+    this.patientService.getAllPatientsOrderDesc().subscribe({
+      next: (data) => {
+        this.patientList = data;
+        console.log(this.patientList);
+      },
+      error: (err) => {
+        console.log(err);
+      }
+    })
+  }
+
+  changerIndexPatient(event: any) {
+    this.codePatient=event.target.value;
+  }
+
+  getMedicaments() {
+    this.referentielService.getAllMedicamentsOrderDesc().subscribe({
+      next: (data) => {
+        this.medicaments = data;
+        this.filteredMedicaments = data;
+      },
+      error: (err) => {
+        console.log(err);
+      }
+    })
+  }
+
+  getHospitalisation(hospitalisationId: number) {
+    this.hospitalisationService.getHospitalisationById(hospitalisationId).subscribe({
+      next: (data) => {
+        this.editHospitalisation = data;
+        if (this.editHospitalisation != null) {
+          this.observationCliniqueFormGroup = this._formBuilder.group({
+            id: [this.editHospitalisation.observationCliniqueDs?.id],
+            histoireMaladie: [this.editHospitalisation.observationCliniqueDs?.histoireMaladie, Validators.required],
+            motifsHospitalisation: [this.editHospitalisation.observationCliniqueDs?.motifsHospitalisation, Validators.required],
+            antecedentDs: this._formBuilder.group({
+              id: [this.editHospitalisation.observationCliniqueDs?.antecedentDs?.id],
+              antecedentsMedicaux: [this.editHospitalisation.observationCliniqueDs?.antecedentDs?.antecedentsMedicaux],
+              antecedentsChirurgicaux: [this.editHospitalisation.observationCliniqueDs?.antecedentDs?.antecedentsChirurgicaux],
+              antecedentsGynecologiques: [this.editHospitalisation.observationCliniqueDs?.antecedentDs?.antecedentsGynecologiques],
+              antecedentsFamilialsAscendant: [this.editHospitalisation.observationCliniqueDs?.antecedentDs?.antecedentsFamilialsAscendant],
+              antecedentsFamilialsCollateral: [this.editHospitalisation.observationCliniqueDs?.antecedentDs?.antecedentsFamilialsCollateral],
+              antecedentsFamilialsDescendant: [this.editHospitalisation.observationCliniqueDs?.antecedentDs?.antecedentsFamilialsDescendant],
+              modeVies: [this.editHospitalisation.observationCliniqueDs?.antecedentDs?.modeVies],
+            }),
+            examenPhysiqueDs: this._formBuilder.group({
+              id: [this.editHospitalisation.observationCliniqueDs?.examenPhysiqueDs?.id],
+              examenGeneral: [this.editHospitalisation.observationCliniqueDs?.examenPhysiqueDs?.examenGeneral],
+              examenAppareil: [this.editHospitalisation.observationCliniqueDs?.examenPhysiqueDs?.examenAppareil],
+              pressionArterielS: [this.editHospitalisation.observationCliniqueDs?.examenPhysiqueDs?.pressionArterielS],
+              pressionArterielD: [this.editHospitalisation.observationCliniqueDs?.examenPhysiqueDs?.pressionArterielD],
+              temperature: [this.editHospitalisation.observationCliniqueDs?.examenPhysiqueDs?.temperature],
+              frequenceC: [this.editHospitalisation.observationCliniqueDs?.examenPhysiqueDs?.frequenceC],
+              frequenceR: [this.editHospitalisation.observationCliniqueDs?.examenPhysiqueDs?.frequenceR],
+              saturationOxygene: [this.editHospitalisation.observationCliniqueDs?.examenPhysiqueDs?.saturationOxygene],
+              diurese: [this.editHospitalisation.observationCliniqueDs?.examenPhysiqueDs?.diurese],
+              poids: [this.editHospitalisation.observationCliniqueDs?.examenPhysiqueDs?.poids],
+              imc: [this.editHospitalisation.observationCliniqueDs?.examenPhysiqueDs?.imc],
+              tourTaille: [this.editHospitalisation.observationCliniqueDs?.examenPhysiqueDs?.tourTaille],
+              taille: [this.editHospitalisation.observationCliniqueDs?.examenPhysiqueDs?.taille],
+              tourHanche: [this.editHospitalisation.observationCliniqueDs?.examenPhysiqueDs?.tourHanche],
+              glycemie: [this.editHospitalisation.observationCliniqueDs?.examenPhysiqueDs?.glycemie],
+            }),
+          });
+          this.examenComplementaireFormGroup = this._formBuilder.group({
+            id: [this.editHospitalisation.examenComplementaireDs?.id],
+            biologie: [this.editHospitalisation.examenComplementaireDs?.biologie],
+            biologieFileName: [this.editHospitalisation.examenComplementaireDs?.biologieFileName],
+            immunologie: [this.editHospitalisation.examenComplementaireDs?.immunologie],
+            immunologieFileName: [this.editHospitalisation.examenComplementaireDs?.immunologieFileName],
+            imagerie: [this.editHospitalisation.examenComplementaireDs?.imagerie],
+            imagerieFileName: [this.editHospitalisation.examenComplementaireDs?.imagerieFileName],
+            anatomopathologie: [this.editHospitalisation.examenComplementaireDs?.anatomopathologie],
+            anatomopathologieFileName: [this.editHospitalisation.examenComplementaireDs?.anatomopathologieFileName],
+          });
+          this.traitementFormGroup = this._formBuilder.group({
+            id: [this.editHospitalisation.traitementMedicalDs?.id],
+            protocole: [this.editHospitalisation.traitementMedicalDs?.protocole],
+            protocoleFileName: [this.editHospitalisation.traitementMedicalDs?.protocoleFileName],
+            traitementMedicalItemDs: this._formBuilder.array([])
+          });
+          for (let i = 0; i < this.editHospitalisation.traitementMedicalDs!.traitementMedicalItemDs!.length; i++) {
+            (this.traitementFormGroup.get('traitementMedicalItemDs') as FormArray).push(
+              this._formBuilder.group({
+                id: [this.editHospitalisation.traitementMedicalDs!.traitementMedicalItemDs![i].id],
+                medicamendId: [this.editHospitalisation.traitementMedicalDs!.traitementMedicalItemDs![i].medicamendId],
+                psologie: [this.editHospitalisation.traitementMedicalDs!.traitementMedicalItemDs![i].psologie],
+                nbrePrise: [this.editHospitalisation.traitementMedicalDs!.traitementMedicalItemDs![i].nbrePrise],
+                administrePar: [this.editHospitalisation.traitementMedicalDs?.traitementMedicalItemDs![i].administrePar],
+                est_administre: [this.editHospitalisation.traitementMedicalDs!.traitementMedicalItemDs![i].est_administre],
+              })
+            )
+          }
+          this.discussionFormGroup = this._formBuilder.group({
+            id: [this.editHospitalisation.discussionDs?.id],
+            resume: [this.editHospitalisation.discussionDs?.resume],
+          });
+          this.syntheseFormGroup = this._formBuilder.group({
+            id: [this.editHospitalisation.syntheseDs?.id],
+            observation: [this.editHospitalisation.syntheseDs?.observation]
+          });
+        }     
+      }
+
     }
-    else {
-      this.initPointFocalFormGroup(null);
+  )    
+}
+
+  //
+  valuesMontantIMC() {
+    this.observationCliniqueFormGroup?.get('examenPhysiqueDs')?.get('poids')!.valueChanges.subscribe((res: any) => {
+      this.calculerIMC()
+    })
+    this.observationCliniqueFormGroup?.get('examenPhysiqueDs')?.get('taille')!.valueChanges.subscribe((res: any) => {
+      this.calculerIMC()
+    })
+  }
+
+  calculerIMC() {
+    const poids = Number(this.observationCliniqueFormGroup?.get('examenPhysiqueDs')?.get('poids')?.value);
+    const taille = Number(this.observationCliniqueFormGroup?.get('examenPhysiqueDs')?.get('taille')?.value);
+    const imc: any = Number(poids / (taille * taille));
+    this.observationCliniqueFormGroup?.get('examenPhysiqueDs')?.get('imc')!.setValue(imc, { onlySelf: true, emitEvent: true });
+  }
+ 
+  //Examen physique
+
+  onBiologieFileSelected(event: any) {
+    this.biologieFile = event.target.files[0];
+    this.examenComplementaireFormGroup.get('biologieFileName')?.setValue(this.biologieFile.name);
+  }
+
+  uploadBiologicFile(hospitalisationId: number, formData: FormData) {
+    this.hospitalisationService.uploadBiologicFile(hospitalisationId, formData).subscribe({
+      next: data => {},
+      error: error => {console.log(error)},
+    });
+  }
+
+  onImmunologieFileSelected(event: any) {
+    this.immunologieFile = event.target.files[0];
+    this.immunologieFilename = this.immunologieFile.name;
+    this.examenComplementaireFormGroup.get('immunologieFileName')?.setValue(this.immunologieFile.name);
+  }
+
+  uploadImmunologieFile(hospitalisationId: number, formData: FormData) {
+    this.hospitalisationService.uploadImmunologieFile(hospitalisationId, formData).subscribe({
+      next: data => {},
+      error: error => {console.log(error)},
+    });
+  }
+
+  onImagerieFileSelected(event: any) {
+    this.imagerieFile = event.target.files[0];
+    this.imagerieFilename = this.imagerieFile.name;
+    this.examenComplementaireFormGroup.get('imagerieFileName')?.setValue(this.imagerieFile.name);
+  }
+
+  uploadImagerieFile(hospitalisationId: number, formData: FormData) {
+    this.hospitalisationService.uploadImagerieFile(hospitalisationId, formData).subscribe({
+      next: data => {},
+      error: error => {console.log(error)},
+    });
+  }
+
+
+  onAnatomopathologieFileSelected(event: any) {
+    this.anatomopathologieFile = event.target.files[0];
+    this.examenComplementaireFormGroup.get('anatomopathologieFileName')?.setValue(this.anatomopathologieFile.name);
+  }
+
+  uploadAnatomologieFile(hospitalisationId: number, formData: FormData) {
+    this.hospitalisationService.uploadAnatomologieFile(hospitalisationId, formData).subscribe({
+      next: data => {},
+      error: error => {console.log(error)},
+    });
+  }
+
+  // Traitement Items
+
+  traitementMedicalItemDs(): FormArray {
+    return this.traitementFormGroup.get('traitementMedicalItemDs') as FormArray;
+  }
+
+  newTraitementMedicalItem(): FormGroup {
+    return this._formBuilder.group({
+      medicamendId: ['', Validators.required],
+      psologie: ['', Validators.required],
+      nbrePrise: ['', Validators.required],
+      administrePar: ['', Validators.required],
+      est_administre: [Validators.required]
+    })
+  }
+
+  onAddTraitementMedicalItem() {
+    console.log("New traitement", this.newTraitementMedicalItem().value);
+    this.traitementMedicalItemDs().push(this.newTraitementMedicalItem());
+  }
+
+  removeTraitementMedicalItem(traitemenetItemIndex: number) {
+    this.traitementMedicalItemDs().removeAt(traitemenetItemIndex);
+  }
+
+  onProtocoleFileSelected(event: any) {
+    this.protocoleFile = event.target.files[0];
+    this.traitementFormGroup.get('protocoleFileName')?.setValue(this.protocoleFile.name);
+  }
+
+  uploadProtocoleFile(traitementId: number, formData: FormData) {
+    this.hospitalisationService.uploadProtocoleTraitementFile(traitementId, formData).subscribe({
+      next: data => {},
+      error: error => {console.log(error)},
+    });
+  }
+
+  saveHospitalisation() { 
+    if (this.paramId) {
+      this.editHospitalisation.observationCliniqueDs = this.observationCliniqueFormGroup.getRawValue();
+      this.editHospitalisation.examenComplementaireDs = this.examenComplementaireFormGroup.getRawValue();
+      this.editHospitalisation.traitementMedicalDs = this.traitementFormGroup.getRawValue();
+      this.editHospitalisation.discussionDs = this.discussionFormGroup.getRawValue();
+      this.editHospitalisation.syntheseDs = this.syntheseFormGroup.getRawValue();
+      this.editHospitalisation.code = this.codePatient;
+      console.log("Hospitalisation", this.editHospitalisation);
+      return;
+      this.hospitalisationService.updateHospitalisation(this.paramId, this.editHospitalisation).subscribe(
+        {
+          next: (response) => {
+            const body = new FormData();
+            if(this.biologieFile) {
+              body.append('biologic', this.biologieFile)
+              this.uploadBiologicFile(Number(response), body);
+            };
+            if(this.immunologieFile) {
+              body.append('immunologic', this.immunologieFile)
+              this.uploadImmunologieFile(Number(response), body);
+            };
+            if(this.imagerieFile) {
+              body.append('imager', this.imagerieFile)
+              this.uploadImagerieFile(Number(response), body);
+            };
+            if(this.anatomopathologieFile) {
+              body.append('hematologic', this.anatomopathologieFile)
+              this.uploadAnatomologieFile(Number(response), body);
+            };
+            if (this.protocoleFile) {
+              body.append('protocol', this.protocoleFile);
+              this.uploadProtocoleFile(Number(response), body);
+            }
+            window.alert("Hospitalisation a été modifiée avec succès");
+            /*
+            this.toastr.success('succès !', 'L\'hospitalisation a été modifiée avec succès !!');
+            this.router.navigate(['/home/circuit/details/', this.circuit.id])
+          
+            */
+          },
+          error: (error) => {
+        //    this.toastr.warning('hospitalisation patient !', 'Erreur lors de la l\'enregistrement de');
+          }
+        }
+      );
+    }else {
+      // save Hospitalisation
+      const hostpitalisationData: any = {
+        code: this.codePatient,
+        createdBy: this.userId,
+        observationCliniqueDs: {
+          histoireMaladie: this.observationCliniqueFormGroup.getRawValue().histoireMaladie,
+          motifsHospitalisation: this.observationCliniqueFormGroup.getRawValue().motifsHospitalisation,
+          antecedentDs: this.observationCliniqueFormGroup.get('antecedentDs').value,
+          examenPhysiqueDs: this.observationCliniqueFormGroup.get('examenPhysiqueDs').value,
+        },
+        examenComplementaireDs: this.examenComplementaireFormGroup.getRawValue(),
+        traitementMedicalDs: this.traitementFormGroup.getRawValue(),
+        discussionDs: this.discussionFormGroup.getRawValue(),
+        syntheseDs: this.syntheseFormGroup.getRawValue(),
+      };
+      console.log("Hospitalisation", hostpitalisationData);
+      this.hospitalisationService.createHospitalisation(hostpitalisationData).subscribe(
+        {
+          next: (response) => {
+            window.alert("Hospitalisation créee avec succès");
+            console.log("Hospitalisation result", response);
+            /*
+            this.toastr.success('succès !', 'L\'hospitalisation a été crée avec succès !!');
+            this.router.navigate(['/home/circuit/details/', this.circuit.id])
+            */
+            const body = new FormData();
+            if(this.biologieFile) {
+              body.append('biologic', this.biologieFile)
+              this.uploadBiologicFile(Number(response), body);
+            };
+            if(this.immunologieFile) {
+              body.append('immunologic', this.immunologieFile)
+              this.uploadImmunologieFile(Number(response), body);
+            };
+            if(this.imagerieFile) {
+              body.append('imager', this.imagerieFile)
+              this.uploadImagerieFile(Number(response), body);
+            };
+            if(this.anatomopathologieFile) {
+              body.append('hematologic', this.anatomopathologieFile)
+              this.uploadAnatomologieFile(Number(response), body);
+            };
+            if (this.protocoleFile) {
+              body.append('protocol', this.protocoleFile);
+              this.uploadProtocoleFile(Number(response), body);
+            }
+          },
+          error: (error) => {
+            window.alert(error);
+        //    this.toastr.warning('hospitalisation patient !', 'Erreur lors de la l\'enregistrement de');
+          }
+        }
+      );
     }
+        
   }
 
-  initPointFocal() {
-    
-  }  
-
-
-  getEntrepriseByDemande(entrepriseId: number) {
-  
-  }
-  
-  getEntrepriseById(entrepriseId: number) {
-
-  }
-  
-  changeEntreprise(event: any){
-    this.getEntrepriseByDemande(event.value);
-  }
-
-
-  saveIdentification(){
-    
-   
-  }
-  
-
-  saveDemandeDirigeant() {
-   
-   
-  }
-
-  onFileSelected(event: any, type: EntrepriseFileType) {
-    const file: File = event.target.files[0];
-    if (type === EntrepriseFileType.CNI) {
-      this.cniFilename = file.name;
-      this.cniFile = file;
-    }
-    else if (type === EntrepriseFileType.RCCM) {
-      this.rccmFilename = file.name;
-      this.rccmFile = file;
-    }
-  }
-  
-  onRemoveFile(event: any, type: EntrepriseFileType) {
-    if (type === EntrepriseFileType.CNI) {
-      this.cniFilename = '';
-      this.cniFile = null;
-    }
-    else if (type === EntrepriseFileType.RCCM) {
-      this.rccmFilename = '';
-      this.rccmFile = null;
-    }
-  }
-
-  private formatDate(date: Date) {
-    let month = '' + (date.getMonth() + 1);
-    let day = '' + date.getDate();
-    if (month.length < 2) 
-      month = '0' + month;
-  if (day.length < 2) 
-      day = '0' + day;
-    return [date.getFullYear(), month, day].join('-')
-  }
-
-    
-   
+  goBack() {
+    this.location.back();
+  }   
     
   cancel() {
   //  this.location.back()
   }
   
 
-  currentStep: number;
+  
   public formateJS() {
     const circles = document.querySelectorAll(".circle");
     const progressBar : any = document.querySelector(".indicator");
     const buttons = document.querySelectorAll("button");
+    console.log(circles.length);
     this.currentStep = 1;
     const updateSteps = (e) => {
       this.currentStep = e.target.id === "next" ? ++this.currentStep : --this.currentStep;
@@ -344,8 +590,11 @@ export class CreateHospitalisationComponent implements OnInit {
       progressBar.style.width = `${((this.currentStep - 1) / (circles.length - 1)) * 100}%`;
       if (this.currentStep === circles.length) {
         buttons[1].disabled = true;
+        this.endStep = true;
+        console.log(buttons[1]);
       } else if (this.currentStep === 1) {
         buttons[0].disabled = true;
+        this.endStep = false;
       } else {
         buttons.forEach((button) => (button.disabled = false));
       }

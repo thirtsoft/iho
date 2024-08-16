@@ -7,17 +7,23 @@ import { ListActionComponent } from './pages/list-action/list-action.component';
 import { CreateActionComponent } from './pages/create-action/create-action.component';
 
 const routes: Routes = [
-  {
-    path: '',
-    component: ProfilsComponent,
-    children: [
-      { path: '', redirectTo: 'all', pathMatch: 'full' },
-      { path: 'create', component: CreateProfilComponent },
-      { path: 'all', component: ListProfilComponent },
-      { path: 'actions', component: ListActionComponent },
-      { path: 'action', component: CreateActionComponent }
-    ],
+//  { path: '', redirectTo: 'all', pathMatch: 'full' },
+  { 
+    path: 'create', 
+    component: CreateProfilComponent 
   },
+  { 
+    path: 'all', 
+    component: ListProfilComponent 
+  },
+  { 
+    path: 'actions', 
+    component: ListActionComponent 
+  },
+  { 
+    path: 'action', 
+    component: CreateActionComponent 
+  }
  
 ];
 

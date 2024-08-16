@@ -144,25 +144,43 @@
 				</li>
 				<li [routerLink]="'/admin/dashboard'" [class.active]="page === 'Dashboard'">
 					<a  (click)="change('Dashboard')"><i class="fe fe-home" style="color: #fff"></i>
-						<span style="color: #fff">Dashboard</span></a>
+						<span style="color: #fff">Tableau de bord</span></a>
 				</li>
+				<li class="submenu">
+					<a href="javascript:void(0)"><i class="fe fe-document"></i> <span> Administration</span> <span class="menu-arrow"></span></a>
+					<ul style="display: none;">
+						<li [class.active]="page === 'Actions'"> 
+							<a  (click)="change('Actions')" [routerLink]="'/admin/profils/actions'"><i class="fe fe-users"></i> <span>Actions</span></a>
+						</li> 
+						<li [class.active]="page === 'Profils'"> 
+							<a  (click)="change('Profils')" [routerLink]="'/admin/profils/all'"><i class="fe fe-users"></i> <span>Profils</span></a>
+						</li> 
+						<li [class.active]="page === 'Doctors'" > 
+							<a (click)="change('Doctors')" [routerLink]="'/admin/doctor'"><i class="fe fe-user-plus"></i> <span>Personnels</span></a>
+						</li>
+					</ul>
+				</li>
+				<!--
 				<li [class.active]="page === 'Appointments'">
 					<a  (click)="change('Appointments')" [routerLink]="'/admin/appointment'"><i class="fe fe-layout"></i> <span>Appointments</span></a>
 				</li>
 				<li [class.active]="page === 'Specialities'">
 					<a  (click)="change('Specialities')" [routerLink]="'/admin/specialities'"><i class="fe fe-users"></i> <span>Specialities</span></a>
 				</li>
-				<!-- <li [class.active]="page === 'Blog'">
+				 <li [class.active]="page === 'Blog'">
 					<a  (click)="change('Blog')" [routerLink]="'/admin/blog'"><i class="fe fe-users"></i> <span>Blog</span></a>
-				</li> -->
+				</li> 
 				<li [class.active]="page === 'Doctors'" >
 					<a (click)="change('Doctors')" [routerLink]="'/admin/doctor'"><i class="fe fe-user-plus"></i> <span>Doctors</span></a>
 				</li>
+				-->
 				<li [class.active]="page === 'Patients'">
-					<a (click)="change('Patients')" [routerLink]="'/admin/patients'" ><i class="fe fe-user"></i> <span>Patients</span></a>
+					<a (click)="change('Patients')" [routerLink]="'/admin/patients'" >
+						<i class="fe fe-user"></i> <span>Patients</span></a>
 				</li>
-				<li [class.active]="page === 'Hospitalisation'">
-					<a (click)="change('Hospitalisation')" [routerLink]="'/admin/hospitalisation'" ><i class="fe fe-user"></i> <span>Hospitalisation</span></a>
+				<li [class.active]="page === 'Hospitalisations'">
+					<a (click)="change('Hospitalisations')" [routerLink]="'/admin/hospitalisations'" >
+						<i class="fas fa-stethoscope"></i> <span>Hospitalisation</span></a>
 				</li>
 				<li  [class.active]="page === 'Reviews'">
 					<a (click)="change('Reviews')" [routerLink]="'/admin/reviews'" ><i class="fe fe-star-o"></i> <span>Reviews</span></a>
@@ -211,7 +229,7 @@
 				<li class="menu-title">
 					<span>Pages</span>
 				</li>
-				<li class="submenu">
+				<!-- <li class="submenu">
 					<a href="javascript:void(0)"><i class="fe fe-document"></i> <span> Blog </span> <span class="menu-arrow"></span></a>
 					<ul style="display: none;">
 						<li [class.active]="page === 'Blog'" ><a (click)="change('Blog')"  [routerLink]="'blog'"> Blog </a></li>
@@ -234,8 +252,8 @@
 						<li><a [routerLink]="'forgot-pass'"> Forgot Password </a></li>
 						<li><a [routerLink]="'lock-screen'"> Lock Screen </a></li>
 					</ul>
-				</li>
-				<li class="submenu">
+				</li> -->
+				<!-- <li class="submenu">
 					<a href="javascript:void(0)"><i class="fe fe-warning"></i> <span> Error Pages </span><span class="menu-arrow"></span></a>
 					<ul style="display: none;">
 						<li><a [routerLink]="'error-first'">404 Error </a></li>
@@ -250,7 +268,7 @@
 				</li>
 				<li [class.active]="page === 'Components'">
 					<a (click)="change('Components')" [routerLink]="'components'"><i class="fe fe-vector"></i> <span>Components</span></a>
-				</li>
+				</li> -->
 				<li class="submenu">
 					<a href="javascript:void(0)"><i class="fe fe-layout"></i> <span> Forms </span> <span class="menu-arrow"></span></a>
 					<ul style="display: none;">

@@ -192,7 +192,7 @@ const routes: Routes = [
       {
         path: 'patients',
         loadChildren: () =>
-          import('./patients/patients.module').then((m) => m.PatientsModule),
+          import('./patient/patient.module').then((m) => m.PatientModule),
       },
       {
         path: 'transactions',
@@ -231,7 +231,7 @@ const routes: Routes = [
           import('./referentiel/referentiel.module').then((m) => m.ReferentielModule),
       },
       {
-        path: 'hospitalisation',
+        path: 'hospitalisations',
         loadChildren: () =>
           import('./hospitalisation/hospitalisation.module').then((m) => m.HospitalisationModule),
       },

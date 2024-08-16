@@ -2,15 +2,20 @@
 
     <div class="content container-fluid">
         <div class="page-header">
-            <div class="col-sm-7 col-auto">
-                <h3 class="page-title">Profils</h3>
-				<ul class="breadcrumb">
-				    <li class="breadcrumb-item"><a [routerLink]="'/admin/'">Tableau de bord</a></li>
-					<li class="breadcrumb-item active">Liste des profils</li>
-				</ul>
-            </div>
-            <div class="col-sm-5 col">
-                <a (click)="openModal(template)" class="btn btn-primary float-right mt-2">Ajouter</a>
+            <div class="row">
+                <div class="col-sm-7 col-auto">
+                    <h3 class="page-title">Profils</h3>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a [routerLink]="'/admin/'">Tableau de bord</a></li>
+                        <li class="breadcrumb-item active">Liste des profils</li>
+                    </ul>
+                </div>
+                <div class="col-sm-5 col">
+                    <a  class="btn btn-primary float-right mt-2" data-toggle="modal"
+                        (click)="openModal(template)">
+                         Ajouter
+                    </a>
+                </div>
             </div>
         </div>
         <!-- /Page Header -->
@@ -25,7 +30,7 @@
                                         <th>#</th>
 										<th>Code</th>
 										<th>Libelle</th>
-										<th class="text-right">Actions</th>
+                                        <th class="text-right">Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -33,10 +38,10 @@
 										<td>{{profil.id}}</td>
 										<td>{{profil.code}}</td>
                                         <td>{{profil.libelle}}</td>
-										
+
                                         <td class="text-right">
                                             <div class="actions">
-                                                <a class="btn btn-sm bg-success-light" data-toggle="modal"
+                                                <a id="open-modal" class="btn btn-sm bg-success-light" data-toggle="modal"
                                                     (click)="editModal(edittemplate,profil)">
                                                     <i class="fe fe-pencil"></i> Edit
                                                 </a>
@@ -93,9 +98,15 @@
 			<div class="row form-row">
                 <div class="col-12">
                     <div class="form-group">
-                       <ng-select [multiple]="true" [closeOnSelect]="false" [searchable]="false" class="form-control"
-                                placeholder="Choisir les Actions*" formControlName="actionListDs">
-                            <ng-option [value]="item" *ngFor="let item of actions"> {{item.libelle}}</ng-option>
+                        <label>Liste des actions <span class="text-danger">*</span></label>
+                       <!-- <ng-select [multiple]="true" [closeOnSelect]="false" [searchable]="false" class="form-control"
+                            formControlName="actionListDs">
+                            <ng-option [value]="item" *ngFor="let item of actions"> {{item.libelle}}</ng-option> &nbsp;
+                        </ng-select> -->
+
+                        <ng-select [multiple]="true" [closeOnSelect]="false" [searchable]="false" class="form-control"
+                            placeholder="Actions*" formControlName="actionListDs">
+                            <ng-option [value]="item.id" *ngFor="let item of actions">{{item.libelle}}</ng-option>
                         </ng-select>
                     </div>
                 </div>          
@@ -104,7 +115,7 @@
         <div class="pull-right" style="margin-top:25px">
             <button type="button" class="btn btn-success si_accept_confirm" id="btn-yes" (click)="save()">Enregistrer</button>
             <button type="button" class="btn btn-danger si_accept_cancel" (click)="decline()" >Annuler</button>
-          </div>
+        </div>
     </div>
 </ng-template>
 
@@ -143,9 +154,10 @@
 			<div class="row form-row">
                 <div class="col-12">
 					<div class="form-group">
-                        <ng-select [multiple]="true" class="form-control" [compareWith]="actionCompare"
-                                placeholder="Choisir les Actions*" formControlName="actionListDs">
-                            <ng-option [value]="item" *ngFor="let item of actions"> {{item.libelle}}</ng-option>
+                       
+                        <ng-select [multiple]="true" [closeOnSelect]="false" [searchable]="false" class="form-control"
+                            placeholder="Actions*" formControlName="actionListDs">
+                            <ng-option [value]="item.id" *ngFor="let item of actions">{{item.libelle}}</ng-option>
                         </ng-select>
                     </div>
 
@@ -155,7 +167,7 @@
         <div class="pull-right" style="margin-top:25px">
             <button type="button" class="btn btn-success si_accept_confirm" id="btn-yes" (click)="editer()">Enregistrer</button>
             <button type="button" class="btn btn-danger si_accept_cancel" (click)="decline()" >Annuler</button>
-          </div>
+        </div>
     </div>
 </ng-template>
 
@@ -167,7 +179,7 @@
         </button>
     </div>
     <div class="modal-body text-center">
-        étes-vous sur de vouloir supprimer ce profil  ?
+        étes-vous sur de vouloir supprimer ce profil ?
       <div style="margin-top:25px">
         <button type="button" class="btn btn-default" (mouseover)="btnColor()" id="btn-yes" (click)="deleteProfil()" >Oui</button>
         <button type="button" class="btn btn-primary" (mouseover)="btnColorNo()" id="btn-no" (click)="decline()" >No</button>

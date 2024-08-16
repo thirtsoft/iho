@@ -75,11 +75,53 @@
   cursor: not-allowed;
 }
 
-
 .form-row {
-    display: flex;
-    width: 100%;
-    align-items: center;
-    justify-content: space-between;
-    position: relative;
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+}
+
+
+#uploadFile {
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  z-index: 9;
+  opacity: 0;
+  height: 100%;
+  cursor: pointer;
+  position: absolute;
+}
+
+#fileUpload {
+  position: absolute;
+  cursor: pointer;
+  z-index: 10;
+  opacity: 0;
+  height: 100%;
+  width: 100%;
+  left: 0px;
+  top: 0px;
+}
+
+.file {
+  margin-left: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 5px;
+  row-gap: 1.5em;
+}
+
+.file-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+
+.file-input {
+  display: none;
 }

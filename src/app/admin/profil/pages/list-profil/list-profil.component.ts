@@ -26,6 +26,8 @@ export class ListProfilComponent implements OnInit {
 
   actions: Action[] = [];
 
+  profil: Profil = {};
+
   constructor(
     private modalService: BsModalService,
     private profilageService: ProfilageService,
@@ -37,6 +39,8 @@ export class ListProfilComponent implements OnInit {
     this.getActions();
     this.initializeForm(null);
   }
+
+  
 
   getProfils() {
     this.profilageService.getAllProfils().subscribe(
@@ -59,14 +63,40 @@ export class ListProfilComponent implements OnInit {
     );
   }
 
-  initializeForm(profil: Profil | null){
+
+  initializeForm(profil: Profil|null) {
+    this.profilFormGroup =  this._formBuilder.group({
+      id: [profil?.id ?? ''],
+      code: [profil?.libelle ?? '', Validators.required],
+      libelle: [profil?.libelle ?? '', Validators.required],
+      actionListDs: [profil?.actionListDs?.map(a => a.id) ?? [], Validators.required],
+  //    actionListDs: [profil?.actionListDs? profil.actionListDs: '', Validators.required]
+    });
+  }
+
+  getProfil(profilId: number) {
+    this.profilageService.getProfil(profilId).subscribe(
+      {
+        next: (response) =>{
+         this.profil = response;
+         this.initializeForm(response);
+         document.getElementById("open-modal").click()
+        },
+        error: (error) =>{
+          console.log(error)
+        }
+      }
+    );
+  }
+
+ /*  initializeForm(profil: Profil | null){
     this.profilFormGroup =  this._formBuilder.group({
       id: [profil?.id ? profil.id : ''],
       code: [profil?.code ? profil.code: '', Validators.required],
       libelle: [profil?.libelle ? profil.libelle: '', Validators.required],
       actionListDs: [profil?.actionListDs? profil.actionListDs: '', Validators.required]
     });
-  }
+  } */
 
   openModal(template: TemplateRef<any>) {
     this.modalRef = this.modalService.show(template, {
@@ -104,8 +134,19 @@ export class ListProfilComponent implements OnInit {
 
   editModal(template: TemplateRef<any>, profil) {
     console.log('edit modal', profil);
-    this.initializeForm(profil);
     this.profilId = profil.id;
+
+    this.profilFormGroup =  this._formBuilder.group({
+      id: [profil?.id ?? ''],
+      code: [profil?.code ?? '', Validators.required],
+      libelle: [profil?.libelle ?? '', Validators.required],
+      actionListDs: [profil?.actionListDs?.map(a => a.id) ?? [], Validators.required],
+    });
+    /*
+    if (this.profil.id != null) {
+      this.getProfil(this.profilId);
+    }*/
+    
     this.modalRef = this.modalService.show(template, {
       class: 'modal-lg modal-dialog-centered',
     });

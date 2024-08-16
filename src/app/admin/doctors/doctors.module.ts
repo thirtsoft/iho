@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { DataTablesModule } from 'angular-datatables';
 import { DoctorsRoutingModule } from './doctors-routing.module';
 import { DoctorsComponent } from './doctors.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -10,7 +11,10 @@ import { DoctorsComponent } from './doctors.component';
   imports: [
     CommonModule,
     DoctorsRoutingModule,
-    DataTablesModule
+    DataTablesModule,
+    FormsModule,
+    ReactiveFormsModule
+
   ]
 })
 export class DoctorsModule { }

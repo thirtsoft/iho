@@ -52,6 +52,8 @@ export class ListPatientComponent implements OnInit {
 
   numberOfPatient?: number;
 
+  id: any; name : any;
+
   constructor(public commonService: CommonServiceService,
               private patientService: PatientService,
        //       private circuitService: CircuitPatientService,
@@ -60,8 +62,6 @@ export class ListPatientComponent implements OnInit {
               private _formBuilder: FormBuilder,
               private modalService: BsModalService
   ) { 
-    this.userId = this.localStorage.getItem('id');
-    this.matricule = this.localStorage.getItem('matricule');
   }
 
   ngOnInit(): void {
@@ -77,108 +77,20 @@ export class ListPatientComponent implements OnInit {
         });
       },
       error => this.errorMessage = <any>error);
-    this.initializeForm(null);
-    this.valuesBirthDayChange();
   }
 
-  initializeForm(patient: Patient | null){
-    this.patientFormGroup =  this._formBuilder.group({
-      id: [patient?.id ? patient.id : ''],
-      code: [patient?.code ? patient.code: '', Validators.required],
-      prenom: [patient?.prenom ? patient.prenom : '', Validators.required],
-      nom: [patient?.nom ? patient.nom : '', Validators.required],
-      sexe: [patient?.sexe ? patient.sexe : '', Validators.required],
-      civilite: [patient?.civilite ? patient.civilite : '', Validators.required],
-      address: [patient?.address ? patient.address : ''],
-      dateNaissance: [new Date(patient?.dateNaissance!)],
-      age: [0],
-      numeroTelephone: [patient?.numeroTelephone, [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{9}$")]],
-      profession: [patient?.profession ? patient.profession : ''],
-      situationMatrimonial: [patient?.situationMatrimonial ? patient.situationMatrimonial : '', Validators.required],
-      est_accompagne: [patient?.est_accompagne ? patient?.est_accompagne : ''],
-      nationalite: [patient?.nationalite ? patient?.nationalite : ''],
-      personneConfianceDs: this._formBuilder.group({
-        prenom: [patient?.personneConfianceDs?.prenom],
-        nom: [patient?.personneConfianceDs?.nom],
-        telephone: [patient?.personneConfianceDs?.telephone],
-        email: [patient?.personneConfianceDs?.email],
-      }),
-    });
+  ajouterPatient() {
+    this.router.navigate(['/admin/patients/create']);
   }
 
-  calculateAgeOfPatient() {
-    if (this.patientFormGroup.controls['dateNaissance'].value != 0) {
-      const dateNaissance = this.patientFormGroup.get('dateNaissance')!.value;
-      var timeDiff = Math.abs(Date.now() - new Date(dateNaissance).getTime());
-      const age = Math.floor(timeDiff / (1000 * 3600 * 24) / 365.25);
-      this.patientFormGroup.get('age')!.setValue(age);
-    }
+  editerPatient(patientId: number) {
+    this.router.navigate(['/admin/patients/edit', patientId]);
   }
 
-  valuesBirthDayChange() {
-    this.patientFormGroup.get('dateNaissance')!.valueChanges.subscribe((res:any)=>{
-      this.calculateAgeOfPatient()
-    })
+  voirDetailPatient(patientId: number) {
+    this.router.navigate(['/admin/patients/details', patientId]);
   }
 
-  openModal(template: TemplateRef<any>) {
-    this.modalRef = this.modalService.show(template, {
-      class: 'modal-lg modal-dialog-centered',
-    });
-  }
-
-  save() {
-    const payload = this.patientFormGroup.value;
-    if (this.patientId === null) {
-      this.patientService.createPatient(payload).subscribe({ 
-        next: (data) =>{
-          console.log('payload after : ',  data);
-          if(data.statut === 'OK') {
-            window.alert('Patient créer avec succès')
-          //  this.toastService.success('succès', 'Les informations du patient ont été enregistrées avec succès !!! ');
-          }else if(data.statut === 'FAILED') {
-        //    this.toastService.error('error', 'Erreur lors de la création : ' + data.message);
-          }
-          this.modalRef.hide();
-          this.ngOnInit();
-        },
-          
-        error: (data) => {
-          console.log('error', 'Erreur lors de la création : ' + data.error);
-        //  this.toastService.error('error', 'Erreur lors de la création : ' + data.error);
-            
-      }
-      });
-    }else {
-      this.patientService.updatePatientByAdministration(this.patientId, payload).subscribe({
-        next: data => {
-          window.alert('Patient updated avec succès')
-        //  this.toastService.success('success', 'Les informations du patient ont été mise à jour avec succès,');
-        },
-        error: error => {
-          console.log(error);
-      //    this.toastService.error('error', ` Erreur lors de la mise à jour des informations du patient, Veuillez reessayer ulterieurement`);
-        }
-      });
-    }
-    this.modalRef.hide();
-    this.ngOnInit();
-   
-
-   // this.modalRef.hide();
-  }
-
-  id: any; name : any;
-
-  editModal(template: TemplateRef<any>, patient) {
-    console.log("Patient edit", patient);
-    this.patientId = patient.id;
-    this.initializeForm(patient);
-    this.valuesBirthDayChange();
-    this.modalRef = this.modalService.show(template, {
-      class: 'modal-lg modal-dialog-centered',
-    });
-  }
 
   deleteModal(template: TemplateRef<any>, patient) {
     this.id = patient.id;
