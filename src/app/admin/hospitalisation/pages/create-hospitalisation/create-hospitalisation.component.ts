@@ -20,6 +20,16 @@ import { PatientService } from 'src/app/admin/patient/service/patient.service';
 import { CircuitPatientService } from 'src/app/admin/dossier-medical/service/circuit-patient.service';
 import { LocalStorageService } from 'src/app/admin/pages/services/local-storage.service';
 import { ReferentielService } from 'src/app/admin/referentiel/service/referentiel.service';
+import { Chambre } from 'src/app/admin/referentiel/models/chambre';
+import { Lit } from 'src/app/admin/referentiel/models/lit';
+import { ServicesPartenaire } from 'src/app/admin/referentiel/models/services-partenaire';
+
+enum HospitalisationFileType {
+  BIOLOGIE = 1,
+  IMMUNOLOGIE = 2,
+  IMAGERIE = 3,
+  ANATOLOGIE = 4,
+}
 
 @Component({
   selector: 'app-create-hospitalisation',
@@ -63,9 +73,19 @@ export class CreateHospitalisationComponent implements OnInit {
 
   patientList?: Patient [];
 
+  chambres: Chambre[];
 
-  addOnBlur = true;
-//  readonly separatorKeysCodes = [ENTER, COMMA] as const;
+  chambreId: number;
+
+  lits: Lit[];
+
+  litId: number;
+
+  estTransferer: number;
+
+  servicePartenaires: ServicesPartenaire[];
+
+  servicePartenaireId: number;
 
   libellesMotifs: string[] = [];
   maladiesAntecedents: string[] = [];
@@ -144,6 +164,8 @@ export class CreateHospitalisationComponent implements OnInit {
     }
     this.getMedicaments();
     this.getPatients();
+    this.getChambres();
+  //  this.getServicePartenaires();
     if (this.paramId && this.paramId > 0) {
       this.getHospitalisation(this.paramId);
     }
@@ -261,6 +283,58 @@ export class CreateHospitalisationComponent implements OnInit {
     this.codePatient=event.target.value;
   }
 
+  getChambres() {
+    this.referentielService.getAllChambres().subscribe({
+      next: (data) => {
+        this.chambres = data;
+      },
+      error: (err) => {
+        console.log(err);
+      }
+    })
+  }
+
+  chargerLits(event: any) {
+    this.chambreId = this.getValue(event);
+    this.getLitsByChambre(this.chambreId)
+  }
+
+  getLitsByChambre(chambreId: number){
+    this.referentielService.getAllLitByChambre(chambreId).subscribe({
+      next: (data) => {
+        this.lits = data;
+      },
+      error: (error) => {console.log(error)},
+    })
+  }
+
+  changerLits(event: any) {
+    this.litId = this.getValue(event);
+  }
+
+  changerTransfere(event: any) {
+    this.estTransferer = this.getValue(event);
+    if (this.estTransferer === 1) {
+      this.getServicePartenaires();
+    }else {
+      this.servicePartenaireId = 1;
+    }
+  }
+
+  getServicePartenaires(){
+    this.referentielService.getAllServicePartenaires().subscribe({
+      next: (data) => {
+        this.servicePartenaires = data;
+        console.log('servicePartenaires', this.servicePartenaires);
+      },
+      error: (error) => {console.log(error)},
+    })
+  }
+
+  changerServicePartenaire(event: any) {
+    this.servicePartenaireId = this.getValue(event);
+  }
+
   getMedicaments() {
     this.referentielService.getAllMedicamentsOrderDesc().subscribe({
       next: (data) => {
@@ -348,6 +422,7 @@ export class CreateHospitalisationComponent implements OnInit {
             id: [this.editHospitalisation.syntheseDs?.id],
             observation: [this.editHospitalisation.syntheseDs?.observation]
           });
+          this.editHospitalisation?.chambreId && this.chargerLits(this.editHospitalisation.chambreId);
         }     
       }
 
@@ -371,7 +446,28 @@ export class CreateHospitalisationComponent implements OnInit {
     const imc: any = Number(poids / (taille * taille));
     this.observationCliniqueFormGroup?.get('examenPhysiqueDs')?.get('imc')!.setValue(imc, { onlySelf: true, emitEvent: true });
   }
- 
+
+  onRemoveFile(event: any, type: HospitalisationFileType) {
+    switch (type) {
+      case 1: type == HospitalisationFileType.BIOLOGIE;
+        this.biologieFilename = '';
+        this.biologieFile = null;
+      break;
+      case 2: type == HospitalisationFileType.IMMUNOLOGIE;
+        this.immunologieFilename = '';
+        this.immunologieFile = null;
+      break;
+      case 3: type == HospitalisationFileType.IMAGERIE;
+        this.imagerieFilename = '';
+        this.imagerieFile = null;
+      break;
+      case 4: type == HospitalisationFileType.ANATOLOGIE;
+        this.anatomopathologieFilename = '';
+        this.anatomopathologieFile = null;
+      break;
+    }
+   
+  }
   //Examen physique
 
   onBiologieFileSelected(event: any) {
@@ -470,6 +566,9 @@ export class CreateHospitalisationComponent implements OnInit {
       this.editHospitalisation.discussionDs = this.discussionFormGroup.getRawValue();
       this.editHospitalisation.syntheseDs = this.syntheseFormGroup.getRawValue();
       this.editHospitalisation.code = this.codePatient;
+      this.editHospitalisation.chambreId = this.chambreId;
+      this.editHospitalisation.litId = this.litId;
+      this.editHospitalisation.litId = this.litId;
       console.log("Hospitalisation", this.editHospitalisation);
       return;
       this.hospitalisationService.updateHospitalisation(this.paramId, this.editHospitalisation).subscribe(
@@ -513,6 +612,10 @@ export class CreateHospitalisationComponent implements OnInit {
       const hostpitalisationData: any = {
         code: this.codePatient,
         createdBy: this.userId,
+        chambreId: this.chambreId,
+        litId: this.litId,
+        servicePartenaireId: this.servicePartenaireId,
+        est_Transfer: this.estTransferer,
         observationCliniqueDs: {
           histoireMaladie: this.observationCliniqueFormGroup.getRawValue().histoireMaladie,
           motifsHospitalisation: this.observationCliniqueFormGroup.getRawValue().motifsHospitalisation,
@@ -525,6 +628,7 @@ export class CreateHospitalisationComponent implements OnInit {
         syntheseDs: this.syntheseFormGroup.getRawValue(),
       };
       console.log("Hospitalisation", hostpitalisationData);
+      return;
       this.hospitalisationService.createHospitalisation(hostpitalisationData).subscribe(
         {
           next: (response) => {
@@ -589,7 +693,7 @@ export class CreateHospitalisationComponent implements OnInit {
       });
       progressBar.style.width = `${((this.currentStep - 1) / (circles.length - 1)) * 100}%`;
       if (this.currentStep === circles.length) {
-        buttons[1].disabled = true;
+       // buttons[1].disabled = true;
         this.endStep = true;
         console.log(buttons[1]);
       } else if (this.currentStep === 1) {
@@ -602,5 +706,10 @@ export class CreateHospitalisationComponent implements OnInit {
     buttons.forEach((button) => {
       button.addEventListener("click", updateSteps);
     });
+  }
+
+  private getValue(event: any) {
+    if (event instanceof Event) return +(event.target as HTMLSelectElement).value;
+    else return +event;
   }
 }

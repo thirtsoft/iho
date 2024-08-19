@@ -38,8 +38,14 @@ export interface Hospitalisation {
 
     createDate?: Date;
 
-   piecesJointesDs?: PieceJointe[];
+    piecesJointesDs?: PieceJointe[];
 
     patientDetailDs?: Patient;
+
+    chambreId?: number;
+
+    litId?: number;
+
+    est_Transfer?: number
 
 }

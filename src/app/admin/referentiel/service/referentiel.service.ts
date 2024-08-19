@@ -120,6 +120,10 @@ export class ReferentielService {
     return this.http.delete(`${this.referentiel}/lit/delete/${id}`);
   }
 
+  getAllLitByChambre(chambreId: number): Observable<Lit[]> {
+    return this.http.get<Lit[]>(`${this.referentiel}/lit/by-chambre/${chambreId}`);
+  }
+
   /**************** GroupeSanguin  ****************/
 
   getAllGroupeSanguins(): Observable<GroupeSanguin[]> {
