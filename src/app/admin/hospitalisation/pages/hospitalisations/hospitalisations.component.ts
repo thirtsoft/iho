@@ -1,7 +1,6 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
 import { Hospitalisation } from '../../models/hospitalisation';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
-import { Utilisateur } from 'src/app/models/utilisateur';
 import { HospitalisationService } from '../../service/hospitalisation.service';
 import { LocalStorageService } from 'src/app/admin/pages/services/local-storage.service';
 import { Router } from '@angular/router';

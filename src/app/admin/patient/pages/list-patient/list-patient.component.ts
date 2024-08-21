@@ -2,11 +2,11 @@ import { Component, OnInit, TemplateRef } from '@angular/core';
 import { Patient } from '../../model/patient';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Utilisateur } from 'src/app/models/utilisateur';
 import { CommonServiceService } from 'src/app/common-service.service';
 import { PatientService } from '../../service/patient.service';
 import { Router } from '@angular/router';
 import { LocalStorageService } from 'src/app/admin/pages/services/local-storage.service';
+import { Utilisateur } from 'src/app/admin/pages/models/utilisateur';
 
 @Component({
   selector: 'app-list-patient',

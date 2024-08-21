@@ -4,6 +4,7 @@ import {
   AfterViewInit,
   ViewEncapsulation,
 } from '@angular/core';
+import { DashboardService } from './service/dashboard.service';
 declare var $: any;
 declare var Morris: any;
 @Component({
@@ -12,7 +13,14 @@ declare var Morris: any;
   styleUrls: ['./dashboard.component.css'],
 })
 export class DashboardComponent implements OnInit {
-  constructor() {}
+
+  numberOfPatient?: number;
+
+  numberHospitalisationHomme?: number;
+
+  numberHospitalisationFemme?: number;
+
+  constructor(private dashboardService: DashboardService) {}
 
   ngOnInit(): void {
     let chartAreaData = [
@@ -79,5 +87,48 @@ export class DashboardComponent implements OnInit {
       resize: true,
       redraw: true,
     });
+    this.countNumberOfPatient();
+    this.nombreHommeHospitaliseHomme();
+    this.nombreHommeHospitaliseFemme();
+  }
+
+  
+  countNumberOfPatient(){
+    this.dashboardService.getNumberOfPatient().subscribe(
+      {
+        next: (data) =>{
+          this.numberOfPatient = data;
+        },
+        error: (error) =>{
+          console.log(error);
+        }
+      }
+    )
+  }
+
+  nombreHommeHospitaliseHomme() {
+    this.dashboardService.getNombreHospitalisationHomme().subscribe(
+      {
+        next: (data) =>{
+          this.numberHospitalisationHomme = data;
+        },
+        error: (error) =>{
+          console.log(error);
+        }
+      }
+    )
+  }
+
+  nombreHommeHospitaliseFemme() {
+    this.dashboardService.getNombreHospitalisationFemme().subscribe(
+      {
+        next: (data) =>{
+          this.numberHospitalisationFemme = data;
+        },
+        error: (error) =>{
+          console.log(error);
+        }
+      }
+    )
   }
 }

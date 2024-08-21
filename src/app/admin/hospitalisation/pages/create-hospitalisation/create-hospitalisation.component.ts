@@ -13,7 +13,6 @@ import { Medicament } from 'src/app/admin/referentiel/models/medicament';
 import { Discussion } from '../../models/discussion';
 import { Synthese } from '../../models/synthese';
 import { CircuitPatient } from 'src/app/admin/dossier-medical/models/circuit-patient';
-import { Utilisateur } from 'src/app/models/utilisateur';
 import { Patient } from 'src/app/admin/patient/model/patient';
 import { HospitalisationService } from '../../service/hospitalisation.service';
 import { PatientService } from 'src/app/admin/patient/service/patient.service';
@@ -23,6 +22,7 @@ import { ReferentielService } from 'src/app/admin/referentiel/service/referentie
 import { Chambre } from 'src/app/admin/referentiel/models/chambre';
 import { Lit } from 'src/app/admin/referentiel/models/lit';
 import { ServicesPartenaire } from 'src/app/admin/referentiel/models/services-partenaire';
+import { Utilisateur } from 'src/app/admin/pages/models/utilisateur';
 
 enum HospitalisationFileType {
   BIOLOGIE = 1,

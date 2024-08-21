@@ -2,12 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Patient } from '../../model/patient';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
-import { Utilisateur } from 'src/app/models/utilisateur';
 import { CircuitPatient } from 'src/app/admin/dossier-medical/models/circuit-patient';
 import { PatientService } from '../../service/patient.service';
 import { CircuitPatientService } from 'src/app/admin/dossier-medical/service/circuit-patient.service';
 import { LocalStorageService } from 'src/app/admin/pages/services/local-storage.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Utilisateur } from 'src/app/admin/pages/models/utilisateur';
 
 @Component({
   selector: 'app-create-patient',

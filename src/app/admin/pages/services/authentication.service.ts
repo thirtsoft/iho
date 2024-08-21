@@ -5,7 +5,7 @@ import { SignInResponse } from '../models/sign-in-response';
 import { Observable } from 'rxjs';
 import { SignInRequest } from '../models/sign-in-request';
 import { FirstSignInRequest } from '../models/first-sign-in-request';
-import { Utilisateur } from 'src/app/models/utilisateur';
+import { Utilisateur } from '../models/utilisateur';
 
 @Injectable({
   providedIn: 'root'

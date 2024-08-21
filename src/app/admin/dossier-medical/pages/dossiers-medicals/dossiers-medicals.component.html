@@ -1,1 +1,64 @@
-<p>dossiers-medicals works!</p>
+<div class="page-wrapper">
+	<div class="content container-fluid">			
+		<div class="page-header">
+			<div class="row">
+				<div class="col-sm-7 col-auto">
+                    <h3 class="page-title">Dossiers médicaux</h3>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a [routerLink]="'/admin/'">Tableau de bord</a></li>
+                        <li class="breadcrumb-item active">Liste des dossiers médicaux</li>
+                    </ul>
+                </div>
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="card">
+					<div class="card-body">
+						<div class="table-responsive">
+							<div class="table-responsive">
+							<table class="datatable table table-hover table-center mb-0">
+								<thead>
+									<tr>
+                                        <th>#</th>
+                                        <th>Numéro</th>
+                                        <th>Date création</th>
+                                        <th>Patient</th>
+                                        <th>Medecin</th>    
+										<th class="text-right">Actions</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr *ngFor="let patient of patientsList">
+										<!-- <td>{{patient.id}}</td> -->
+										<td>{{patient.dateAdmission | date: 'dd-MM-yyyy' }}</td>
+										<td>
+											<h2 class="table-avatar">
+												<a [routerLink]="'/admin/doc-profile'">{{patient.nom }} - {{patient.prenom }}</a>
+											</h2>
+										</td>
+										<td>{{patient.telephone}}</td>
+										<td>{{patient.diagnosticDs?.diagnostic_principal}}</td>
+										<td class="text-center">{{patient?.nombre_passage}}</td>
+										<td class="text-right">
+											<div class="actions">
+												<a class="btn btn-sm bg-warning" data-toggle="modal"
+													(click)="voirDetailPatient(patient.id)">
+                                                    <i class="fe fe-eye"></i> détails
+                                                </a>
+											</div>
+										</td>
+									</tr>
+									
+								</tbody>
+							</table>
+						</div>
+						</div>
+					</div>
+				</div>
+			</div>			
+		</div>
+		
+	</div>			
+</div>

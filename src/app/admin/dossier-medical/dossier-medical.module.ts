@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { DossierMedicalRoutingModule } from './dossier-medical-routing.module';
 import { DetailDossierMedicalComponent } from './pages/detail-dossier-medical/detail-dossier-medical.component';
 import { DossiersMedicalsComponent } from './pages/dossiers-medicals/dossiers-medicals.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -13,7 +14,9 @@ import { DossiersMedicalsComponent } from './pages/dossiers-medicals/dossiers-me
   ],
   imports: [
     CommonModule,
-    DossierMedicalRoutingModule
+    DossierMedicalRoutingModule,
+    FormsModule,
+    ReactiveFormsModule
   ]
 })
 export class DossierMedicalModule { }

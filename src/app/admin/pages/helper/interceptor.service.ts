@@ -16,8 +16,6 @@ export class InterceptorService implements HttpInterceptor {
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const token = this.localStorage.getItem('token');
-    console.log("Token", token);
-    console.log("request", request);
     if (token && !request.url.includes('/iho/api/auth/authenticate')) {
       request = request.clone({
         headers : request.headers.set('Authorization', 'Bearer '+token)

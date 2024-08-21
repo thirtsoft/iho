@@ -3,7 +3,7 @@
 	<!-- Logo -->
 	<div class="header-left">
 		<a [routerLink]="'/admin/'" class="logo">
-			<img src="assets/img/logo.png" alt="Logo">
+			<img src="assets/img/logo-hdj.jpg" alt="Logo">
 		</a>
 		<a [routerLink]="'/admin/'" class="logo logo-small">
 			<img src="assets/admin/img/logo-small.png" alt="Logo" width="30" height="30">
@@ -117,13 +117,13 @@
 						<img src="assets/admin/img/profiles/avatar-01.jpg" alt="User Image" class="avatar-img rounded-circle">
 					</div>
 					<div class="user-text">
-						<h6>Ryan Taylor</h6>
-						<p class="text-muted mb-0">Administrator</p>
+						<h6>{{utilisateur.prenom}}</h6>
+						<p class="text-muted mb-0">{{utilisateur.profileCode}}</p>
 					</div>
 				</div>
-				<a class="dropdown-item" [routerLink]="'doc-profile'">My Profile</a>
-				<a class="dropdown-item" [routerLink]="'settings'">Settings</a>
-				<a class="dropdown-item" [routerLink]="'login-form'">Logout</a>
+				<a class="dropdown-item"  (click)="goToProfil()">Mon profile</a>
+				<!-- <a class="dropdown-item" [routerLink]="'settings'">Changer mot de passe</a> -->
+				<a class="dropdown-item" (click)="logout()">Déconnexion</a>
 			</div>
 		</li>
 		<!-- /User Menu -->
@@ -176,14 +176,36 @@
 				-->
 				<li [class.active]="page === 'Patients'">
 					<a (click)="change('Patients')" [routerLink]="'/admin/patients'" >
-						<i class="fe fe-user"></i> <span>Patients</span></a>
+						<i class="fe fe-users"></i> <span>Patients</span></a>
+				</li>
+				<li [class.active]="page === 'Dosseirs-Medicals'">
+					<a (click)="change('Dosseirs-Medicals')" [routerLink]="'/admin/dossiers-medicals'" >
+						<i class="fa fa-hospital-o"></i> <span>DMI</span></a>
 				</li>
 				<li [class.active]="page === 'Hospitalisations'">
 					<a (click)="change('Hospitalisations')" [routerLink]="'/admin/hospitalisations'" >
 						<i class="fas fa-stethoscope"></i> <span>Hospitalisation</span></a>
 				</li>
+				<li [class.active]="page === 'Appointments'">
+					<a  (click)="change('Appointments')" [routerLink]="'/admin/appointment'"><i class="fe fe-layout"></i> <span>Mes rendez-vous</span></a>
+				</li>
+				<li class="submenu">
+					<a href="javascript:void(0)"><i class="fe fe-calendar"></i> <span> Rendez-vous </span> <span class="menu-arrow"></span></a>
+					<ul style="display: none;">
+						<li [class.active]="page === 'Medicaments'"> 
+							<a (click)="change('Medicaments')" [routerLink]="'referentiels/medicaments'"><i class="fe fe-vector"></i> &nbsp; <span>Rendez-vous</span></a>
+						</li>
+						
+						<li [class.active]="page === 'Chambres'"> 
+							<a (click)="change('Chambres')" [routerLink]="'referentiels/chambres'"><i class="fe fe-layout"></i>&nbsp; <span>Rendez-vous Jour</span></a>
+						</li>
+						<li [class.active]="page === 'Lits'"> 
+							<a (click)="change('Lits')" [routerLink]="'referentiels/lits'"><i class="fe fe-layout"></i> &nbsp; <span>Tous rendez-vous</span></a>
+						</li>
+					</ul>
+				</li>
 				<li  [class.active]="page === 'Reviews'">
-					<a (click)="change('Reviews')" [routerLink]="'/admin/reviews'" ><i class="fe fe-star-o"></i> <span>Reviews</span></a>
+					<a (click)="change('Reviews')" [routerLink]="'/admin/reviews'" ><i class="fe fe-star-o"></i> <span>Notifications</span></a>
 				</li>
 				<li [class.active]="page === 'Transactions'">
 					<a (click)="change('Transactions')" [routerLink]="'/admin/transactions'"><i class="fe fe-activity"></i> <span>Transactions</span></a>
@@ -217,7 +239,7 @@
 						
 					</ul>
 				</li>
-				<li  [class.active]="page === 'Settings'">
+				<!-- <li  [class.active]="page === 'Settings'">
 					<a (click)="change('Settings')" [routerLink]="'/admin/settings'"><i class="fe fe-vector"></i> <span>Settings</span></a>
 				</li>
 				<li class="submenu">
@@ -228,7 +250,7 @@
 				</li>
 				<li class="menu-title">
 					<span>Pages</span>
-				</li>
+				</li> -->
 				<!-- <li class="submenu">
 					<a href="javascript:void(0)"><i class="fe fe-document"></i> <span> Blog </span> <span class="menu-arrow"></span></a>
 					<ul style="display: none;">
@@ -269,7 +291,7 @@
 				<li [class.active]="page === 'Components'">
 					<a (click)="change('Components')" [routerLink]="'components'"><i class="fe fe-vector"></i> <span>Components</span></a>
 				</li> -->
-				<li class="submenu">
+				<!-- <li class="submenu">
 					<a href="javascript:void(0)"><i class="fe fe-layout"></i> <span> Forms </span> <span class="menu-arrow"></span></a>
 					<ul style="display: none;">
 						<li><a [class.active]="page === 'Basic Inputs'"  (click)="change('Basic Inputs')" [routerLink]="'basic-input'">Basic Inputs </a></li>
@@ -286,8 +308,8 @@
 						<li><a [class.active]="page === 'Basic Tables'"  (click)="change('Basic Tables')" [routerLink]="'basic-tables'">Basic Tables </a></li>
 						<li><a [class.active]="page === 'Data Table'"  (click)="change('Data Table')" [routerLink]="'admin-data-table'">Data Table </a></li>
 					</ul>
-				</li>
-				<li class="submenu">
+				</li> -->
+				<!-- <li class="submenu">
 					<a href="javascript:void(0);"><i class="fe fe-code"></i> <span>Multi Level</span> <span class="menu-arrow"></span></a>
 					<ul style="display: none;">
 						<li class="submenu">
@@ -308,7 +330,7 @@
 							<a href="javascript:void(0);"> <span>Level 1</span></a>
 						</li>
 					</ul>
-				</li>
+				</li> -->
 			</ul>
 		</div>
 	</div>

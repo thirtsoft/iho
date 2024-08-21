@@ -35,7 +35,7 @@ const routes: Routes = [
           ),
       },
       {
-        path: 'doc-profile',
+        path: 'doc-profile/:id',
         loadChildren: () =>
           import('./doc-profile/doc-profile.module').then(
             (m) => m.DocProfileModule
@@ -193,6 +193,11 @@ const routes: Routes = [
         path: 'patients',
         loadChildren: () =>
           import('./patient/patient.module').then((m) => m.PatientModule),
+      },
+      {
+        path: 'dossiers-medicals',
+        loadChildren: () =>
+          import('./dossier-medical/dossier-medical.module').then((m) => m.DossierMedicalModule),
       },
       {
         path: 'transactions',

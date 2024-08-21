@@ -2,9 +2,9 @@ import { Component, OnInit, TemplateRef } from '@angular/core';
 import { CommonServiceService } from '../../common-service.service';
 import * as $ from 'jquery';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
-import { Utilisateur } from 'src/app/models/utilisateur';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UtilisateurService } from '../pages/services/utilisateur.service';
+import { Utilisateur } from '../pages/models/utilisateur';
 
 @Component({
   selector: 'app-doctors',
@@ -55,9 +55,9 @@ export class DoctorsComponent implements OnInit {
   initializeForm(utilisateur: Utilisateur | null){
     this.utilisateursFormGroup =  this._formBuilder.group({
       id: [utilisateur?.id ? utilisateur.id : ''],
-      name: [utilisateur?.name ? utilisateur.name: '', Validators.required],
+      nom: [utilisateur?.nom ? utilisateur.nom: '', Validators.required],
       email: [utilisateur?.email ? utilisateur.email : '', Validators.required],
-      mobile: [utilisateur?.mobile ? utilisateur.mobile : '', Validators.required],
+      telephone: [utilisateur?.telephone ? utilisateur.telephone : '', Validators.required],
     });
   }
 
