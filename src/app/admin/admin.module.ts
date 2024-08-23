@@ -8,9 +8,10 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import { DataService } from './../data.service';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgSelect2Module } from 'ng-select2';
+import { ListeRendezVousComponent } from './rendezvous/pages/liste-rendez-vous/liste-rendez-vous.component';
 
 @NgModule({
-  declarations: [AdminComponent, SidemenuComponent],
+  declarations: [AdminComponent, SidemenuComponent, ListeRendezVousComponent],
   imports: [
     CommonModule,
     AdminRoutingModule,

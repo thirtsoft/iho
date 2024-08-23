@@ -242,6 +242,12 @@ const routes: Routes = [
       },
 
       {
+        path: 'rendezvous',
+        loadChildren: () =>
+          import('./rendezvous/rendezvous.module').then((m) => m.RendezvousModule),
+      },
+
+      {
         path: 'consultation',
         loadChildren: () =>
           import('./consultation/consultation.module').then((m) => m.ConsultationModule),
