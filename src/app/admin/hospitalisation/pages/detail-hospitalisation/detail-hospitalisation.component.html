@@ -1,5 +1,402 @@
-<div class="container">
-    <h1>
-        Detail hospitalisation
-    </h1>
+<div class="page-wrapper">
+    <div class="content container-fluid">
+        <div class="row">
+            <div class="col-lg-6 col-sm-12 d-flex">
+                <div class="card flex-fill">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-sm-8">
+                                <h3 class="card-title">Détails hospitalisation</h3>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="text-right">
+                                    <a title="Edit Profile" class="btn btn-primary btn-sm" 
+                                        data-toggle="modal"
+                                        (click)="editerHostpitalisation(hospitalisation.id)"><i class="fe fe-pencil"></i> Modifier</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="profile-view-bottom">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="info-list">
+                                        <div class="title">Numéro </div>
+                                        <div class="text" id="bank_name">{{hospitalisation?.numeroHospitalisation}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="info-list">
+                                        <div class="title">Médecin</div>
+                                        <div class="text" id="branch_name">{{hospitalisation?.nomCompletMedecin}}</div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="info-list">
+                                        <div class="title">Date création</div>
+                                        <div class="text" id="account_no">12/08/2024</div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="info-list">
+                                        <div class="title">Etat</div>
+                                        <div class="text" id="account_name">ENCOURS</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6 col-sm-12 d-flex">
+                <div class="card flex-fill">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <h3 class="card-title">Détails patient</h3>
+                            </div>
+                            <div class="col-sm-6">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="profile-view-bottom">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="info-list">
+                                        <div class="title">Patient </div>
+                                        <div class="text" id="bank_name">{{hospitalisation?.civilitePatient}}
+                                            {{hospitalisation?.nomCompletPatient}}</div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="info-list">
+                                        <div class="title">Situation matrimonial</div>
+                                        <div class="text" id="branch_name">
+                                            {{hospitalisation?.situationMatrimonialPatient}}</div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="info-list">
+                                        <div class="title">Téléphone </div>
+                                        <div class="text" id="account_no">{{hospitalisation?.telephonePatient}}</div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="info-list">
+                                        <div class="title">Index patient</div>
+                                        <div class="text" id="account_name">{{hospitalisation?.codePatient}}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-body pt-0">
+                        <nav class="user-tabs mb-4">
+                            <ul class="nav nav-tabs nav-tabs-bottom nav-justified">
+                                <li class="nav-item">
+                                    <a class="nav-link active" href="#cliniques" data-toggle="tab">Cliniques</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#exam_complementaire" data-toggle="tab">Examen
+                                        complémentaires</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#traitements" data-toggle="tab">Traitements </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#discussions" data-toggle="tab">Discussions </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#syntheses" data-toggle="tab">Synthèses </a>
+                                </li>
+                            </ul>
+                        </nav>
+                        <div class="tab-content pt-0">
+                            <div id="cliniques" class="tab-pane fade show active">
+                                <div class="card card-table mb-0">
+                                    <div class="card-body">
+                                        <div class="table-responsive">
+                                            <table class="table table-hover table-center mb-0">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Agent</th>
+                                                        <th>PA</th>
+                                                        <th>PAD</th>
+                                                        <th>Température</th>
+                                                        <th>FC</th>
+                                                        <th>FR</th>
+                                                        <th>SO2</th>
+                                                        <th>Diérèse</th>
+                                                        <th>Poids</th>
+                                                        <th>Taille</th>
+                                                        <th>IMC</th>
+                                                        <th></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>{{hospitalisation?.observationCliniqueDs?.nomCompletAgent}} </td>
+                                                        <td>{{hospitalisation?.observationCliniqueDs?.examenPhysiqueDs?.pressionArterielS}} </td>
+                                                        <td>{{hospitalisation?.observationCliniqueDs?.examenPhysiqueDs?.pressionArterielD}} </td>
+                                                        <td>{{hospitalisation?.observationCliniqueDs?.examenPhysiqueDs?.temperature}} </td>
+                                                        <td>{{hospitalisation?.observationCliniqueDs?.examenPhysiqueDs?.frequenceC}} </td>
+                                                        <td>{{hospitalisation?.observationCliniqueDs?.examenPhysiqueDs?.frequenceR}} </td>
+                                                        <td>{{hospitalisation?.observationCliniqueDs?.examenPhysiqueDs?.saturationOxygene}} </td>
+                                                        <td>{{hospitalisation?.observationCliniqueDs?.examenPhysiqueDs?.diurese}} </td>
+                                                        <td>{{hospitalisation?.observationCliniqueDs?.examenPhysiqueDs?.poids}} </td>
+                                                        <td>{{hospitalisation?.observationCliniqueDs?.examenPhysiqueDs?.taille}} </td>
+                                                        <td>{{hospitalisation?.observationCliniqueDs?.examenPhysiqueDs?.imc}} </td>
+                                                    </tr>                                                   
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="exam_complementaire">
+                                <div class="card card-table mb-0">
+                                    <div class="card-body">
+                                        <div class="table-responsive">
+                                            <table class="table table-hover table-center mb-0">
+                                                <thead>
+                                                    <tr>
+                                                        <th>#</th>
+                                                        <th>Agent</th>
+                                                        <th>Date création</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>{{hospitalisation?.examenComplementaireDs?.id}} </td> 
+                                                        <td>{{hospitalisation?.examenComplementaireDs?.nomCompletAgent}} </td>
+                                                        <td>{{hospitalisation?.examenComplementaireDs?.createdDate}} </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="traitements">
+                                <div class="card card-table mb-0">
+                                    <div class="card-body">
+                                        <div class="table-responsive">
+                                            <table class="table table-hover table-center mb-0">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Agent</th>
+                                                        <th>Medicament</th>
+                                                        <th class="text-center">Psologie</th>
+                                                        <th>Nombre prise</th>
+                                                        <th>Mode administration</th>
+                                                        <th>Est administré</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr *ngFor="let traitement of hospitalisation?.traitementMedicalDs?.traitementMedicalItemDs">
+                                                        <td>{{hospitalisation?.traitementMedicalDs?.nomCompletAgent}}</td>
+                                                        <td>
+                                                            {{traitement?.libelleMedicament}}
+                                                        </td>
+                                                        <td class="text-center"> {{traitement?.psologie}}</td>
+                                                        <td>{{traitement?.nbrePrise}}</td>
+                                                        <td>{{traitement?.administrePar}}</td>
+                                                        <td>{{traitement?.estAdministre ? 'OUI' : 'NON'}}</td>
+                                                       <!--  <td class="text-right">
+                                                            <div class="table-action">
+                                                                <a href="javascript:void(0);"
+                                                                    class="btn btn-sm bg-info-light">
+                                                                    <i class="far fa-eye"></i> View
+                                                                </a>
+
+                                                                <a href="javascript:void(0);"
+                                                                    class="btn btn-sm bg-success-light">
+                                                                    <i class="fas fa-check"></i> Accept
+                                                                </a>
+                                                                <a href="javascript:void(0);"
+                                                                    class="btn btn-sm bg-danger-light">
+                                                                    <i class="fas fa-times"></i> Cancel
+                                                                </a>
+                                                            </div>
+                                                        </td> -->
+                                                    </tr>
+                                                   
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="discussions">
+                                <div class="card card-table mb-0">
+                                    <div class="card-body">
+                                        <div class="table-responsive">
+                                            <table class="table table-hover table-center mb-0">
+                                                <thead>
+                                                    <tr>
+                                                        <th>#</th>
+                                                        <th>Agent</th>
+                                                        <th>Date création</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>{{hospitalisation?.discussionDs?.id}}</td>
+                                                        <td>{{hospitalisation?.discussionDs?.nomCompletAgent}}</td>
+                                                        <td>{{hospitalisation?.createDate}}</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="syntheses">
+                                <div class="card card-table mb-0">
+                                    <div class="card-body">
+                                        <div class="table-responsive">
+                                            <table class="table table-hover table-center mb-0">
+                                                <thead>
+                                                    <tr>
+                                                        <th>#</th>
+                                                        <th>Agent</th>
+                                                        <th>Date création</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>{{hospitalisation?.syntheseDs?.id}}</td>
+                                                        <td>{{hospitalisation?.syntheseDs?.nomCompletAgent}}</td>
+                                                        <td>{{hospitalisation?.syntheseDs?.createdDate}}</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+   <!--  <div class="row float-lg-right">
+        <button type="button" class="btn btn-success si_accept_confirm" 
+            id="btn-yes" style="margin-bottom: 20px;"
+            (click)="transfererHospitalisationModal(templateTransfere,null)">
+            Transférer l'hospitalisation
+        </button>
+
+        <button type="button" class="btn btn-primary" id="btn-yes" 
+            style="margin-bottom: 20px;"
+            (click)="cloturerHospitalisationDialog()">
+            Cloturer l'hospitalisation
+        </button>
+        <button type="button" class="btn btn-white" 
+            style="margin-bottom: 20px; margin-right: 50px;"
+            (click)="transfererHospitalisationModal(templateTransfere,null)"
+            (click)="goToListeHospitalisations()">
+            <i class="fas fa-arrow-alt-circle-left"></i>
+            Retour
+        </button>
+    </div> -->
+
+    <div class="modal-footer">
+          <button type="button" class="btn btn-success"
+            (click)="transfererHospitalisationModal(templateTransfere,null)">
+            Transférer l'hospitalisation
+        </button>
+          <button type="button" class="btn btn-primary"
+            (click)="cloturerrHospitalisationModal(templateCloture,null)">
+            Cloturer l'hospitalisation
+        </button>
+          <button type="button" class="btn btn-white" 
+            (click)="goToListeHospitalisations()">
+            <i class="fas fa-arrow-alt-circle-left"></i>
+            Retour
+        </button>
+      </div>
 </div>
+
+<ng-template #templateTransfere>
+    <div class="modal-header">
+        <h5 class="modal-title text-center">Transférer l'hospitalisation {{hospitalisation.numeroHospitalisation}} - {{hospitalisation.nomCompletPatient}}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="modalRef.hide()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+    <div class="modal-body">
+        <form [formGroup]="transfereFormGroup">
+            <div class="col-md-12 col-sm-12">
+                <div class="mb-3">
+                  <label class="label" for="domaine-input">Service partenaire<span class="login-danger">*</span></label>
+                  <select class="form-control form-select" id="serviceId" formControlName="serviceId"
+                    required>
+                    <option value="">-- Sélectionner un service partenaire --</option>
+                    <option [value]="item.id" *ngFor="let item of servicePartenaires">{{item.libelle}}
+                    </option>
+                  </select>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                  <label class="label">Motif<span class="login-danger">*</span></label>
+                  <textarea rows="2" cols="5" class="form-control" formControlName="motif"
+                    style="padding-top: 10px; min-height: 65px;" required></textarea>
+                </div>
+            </div>
+        </form>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-danger">Fermer</button>
+            <button type="button" class="btn btn-primary"
+                (click)="transfer()"
+                [disabled]="transfereFormGroup.invalid"
+              >Transférer</button>
+          </div>
+    </div>
+</ng-template>
+
+<ng-template #templateCloture>
+    <div class="modal-header">
+        <h5 class="modal-title text-center">Cloturer l'hospitalisation {{hospitalisation.numeroHospitalisation}} - {{hospitalisation.nomCompletPatient}}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="modalRef.hide()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+    <div class="modal-body">
+        <form [formGroup]="clotureFormGroup">
+            <div class="col-md-12 col-sm-12">
+                <div class="mb-3">
+                  <label class="label" for="domaine-input">Motif cloture<span class="login-danger">*</span></label>
+                  <select class="form-control form-select" id="motif" formControlName="motif"
+                    required>
+                    <option value="">-- Sélectionner un motif --</option>
+                    <option [value]="item" *ngFor="let item of motifsCloture">{{item}}
+                    </option>
+                  </select>
+                </div>
+            </div>
+        </form>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-danger">Fermer</button>
+            <button type="button" class="btn btn-primary"
+                (click)="cloturer()"
+                [disabled]="clotureFormGroup.invalid"
+              >Cloturer</button>
+          </div>
+    </div>
+</ng-template>

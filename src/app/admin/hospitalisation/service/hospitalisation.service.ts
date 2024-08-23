@@ -8,6 +8,7 @@ import { ExamenComplementaire } from '../models/examen-complementaire';
 import { TraitementMedical } from '../models/traitement-medical';
 import { Synthese } from '../models/synthese';
 import { Discussion } from '../models/discussion';
+import TransferePayload from '../models/transfere-payload';
 
 @Injectable({
   providedIn: 'root'
@@ -63,6 +64,15 @@ export class HospitalisationService {
 
   uploadAnatomologieFile(examId: number, formData: FormData) {
     return this.http.put<boolean>(`${this.baseUrl_1}/hospitalisation/exam-complementaire/${examId}/add-hospitalisation-hematologic-file`, formData);    
+  }
+
+  transfererHospitalisation(hospitalisationId?: number, value?: TransferePayload) {
+    return this.http.put<boolean>(`${this.baseUrl_1}/hospitalisation/transferer/${hospitalisationId}`, value);
+  }
+
+  cloturerHospitalisation(id: number, libelle: string): Observable<boolean> {
+    const coupletDto = { id: id, libelle: libelle };
+    return this.http.post<boolean>(this.baseUrl_1 + '/hospitalisation', coupletDto);
   }
 
  

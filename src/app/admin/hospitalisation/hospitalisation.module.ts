@@ -10,6 +10,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { NgxDropzoneModule } from 'ngx-dropzone';
 import { AngularTagsInputModule } from '@iomechs/angular-tags-input';
+import { TransfereHospitalisationComponent } from './components/transfere-hospitalisation/transfere-hospitalisation.component';
+import { CloturerHospitalisationComponent } from './components/cloturer-hospitalisation/cloturer-hospitalisation.component';
 
 
 @NgModule({
@@ -17,7 +19,9 @@ import { AngularTagsInputModule } from '@iomechs/angular-tags-input';
     HospitalisationComponent,
     CreateHospitalisationComponent,
     DetailHospitalisationComponent,
-    HospitalisationsComponent
+    HospitalisationsComponent,
+    TransfereHospitalisationComponent,
+    CloturerHospitalisationComponent
   ],
   imports: [
     CommonModule,

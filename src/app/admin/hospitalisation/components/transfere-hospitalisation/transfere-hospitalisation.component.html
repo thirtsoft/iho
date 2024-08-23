@@ -1,0 +1,33 @@
+<div class="modal-header">
+    <h5 class="modal-title">Transférer l'hospitalisation {{numeroHospitalisation}} - {{patient}}</h5>
+    <button type="button" class="btn-close" (click)="activeModal.close('close click')" aria-label="Close"></button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="transferFormGroup" (submit)="transfer()">
+      <!--   <input hidden formControlName="hospitalisationId"> -->
+      <div class="row">
+        <div class="col-md-12">
+          <div class="mb-3">
+            <label class="label" for="domaine-input">Service partenaire<span class="login-danger">*</span></label>
+            <select class="form-control form-select" id="serviceId" formControlName="serviceId">
+              <option value="">-- Sélectionner un service partenaire --</option>
+              <option [value]="item.id" *ngFor="let item of servicePartenaires">{{item.libelle}}
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div class="form-group">
+            <label class="label">Motif<span class="login-danger">*</span></label>
+            <textarea rows="2" cols="5" class="form-control" formControlName="motif"
+              style="padding-top: 10px; min-height: 65px;" required></textarea>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-danger" (click)="activeModal.close('close click')">Fermer</button>
+    <button type="button" class="btn btn-primary" (click)="transfer()"
+      [disabled]="transferFormGroup.invalid">Transférer</button>
+  </div>

@@ -30,6 +30,14 @@ export interface DetailHospitalisation {
 
     nomCompletPatient?: string;
 
+    civilitePatient?: string;
+
+    situationMatrimonialPatient?: string;
+
+    telephonePatient?: string;
+
+    codePatient?: string;
+
     nomCompletMedecin?: string;
 
     createdByUser?: string;

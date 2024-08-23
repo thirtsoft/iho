@@ -325,7 +325,6 @@ export class CreateHospitalisationComponent implements OnInit {
     this.referentielService.getAllServicePartenaires().subscribe({
       next: (data) => {
         this.servicePartenaires = data;
-        console.log('servicePartenaires', this.servicePartenaires);
       },
       error: (error) => {console.log(error)},
     })
@@ -428,7 +427,7 @@ export class CreateHospitalisationComponent implements OnInit {
 
     }
   )    
-}
+  }
 
   //
   valuesMontantIMC() {
