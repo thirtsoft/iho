@@ -49,4 +49,8 @@ export interface DetailHospitalisation {
     piecesJointesDs?: PieceJointe[];
 
     patientDetailDs?: Patient;
+
+    status?: string;
+
+    dateAjout?: Date;
 }

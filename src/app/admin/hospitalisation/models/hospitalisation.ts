@@ -46,6 +46,10 @@ export interface Hospitalisation {
 
     litId?: number;
 
-    est_Transfer?: number
+    est_Transfer?: number;
+
+    status?: string;
+
+    dateAjout?: Date;
 
 }

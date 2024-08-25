@@ -36,13 +36,13 @@
                                 <div class="col-lg-6">
                                     <div class="info-list">
                                         <div class="title">Date création</div>
-                                        <div class="text" id="account_no">12/08/2024</div>
+                                        <div class="text" id="account_no">{{hospitalisation?.dateAjout}}</div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="info-list">
                                         <div class="title">Etat</div>
-                                        <div class="text" id="account_name">ENCOURS</div>
+                                        <div class="text" id="account_name">{{hospitalisation?.status}}</div>
                                     </div>
                                 </div>
                             </div>
@@ -180,7 +180,7 @@
                                                     <tr>
                                                         <td>{{hospitalisation?.examenComplementaireDs?.id}} </td> 
                                                         <td>{{hospitalisation?.examenComplementaireDs?.nomCompletAgent}} </td>
-                                                        <td>{{hospitalisation?.examenComplementaireDs?.createdDate}} </td>
+                                                        <td>{{hospitalisation?.dateAjout}} </td>
                                                     </tr>
                                                 </tbody>
                                             </table>
@@ -254,7 +254,7 @@
                                                     <tr>
                                                         <td>{{hospitalisation?.discussionDs?.id}}</td>
                                                         <td>{{hospitalisation?.discussionDs?.nomCompletAgent}}</td>
-                                                        <td>{{hospitalisation?.createDate}}</td>
+                                                        <td>{{hospitalisation?.dateAjout}}</td>
                                                     </tr>
                                                 </tbody>
                                             </table>
@@ -278,7 +278,7 @@
                                                     <tr>
                                                         <td>{{hospitalisation?.syntheseDs?.id}}</td>
                                                         <td>{{hospitalisation?.syntheseDs?.nomCompletAgent}}</td>
-                                                        <td>{{hospitalisation?.syntheseDs?.createdDate}}</td>
+                                                        <td>{{hospitalisation?.dateAjout}}</td>
                                                     </tr>
                                                 </tbody>
                                             </table>

@@ -157,11 +157,11 @@ export class CreateHospitalisationComponent implements OnInit {
     this.initTraitementFormGroup();
     this.initDiscussionFormGroup();
     this.initSyntheseFormGroup();
-   
+   /*
     if (this.codePatient != null) {
       this.getPatientByIndex(this.codePatient);
       this.getCircuitByPatient(this.codePatient);
-    }
+    }*/
     this.getMedicaments();
     this.getPatients();
     this.getChambres();
@@ -280,7 +280,8 @@ export class CreateHospitalisationComponent implements OnInit {
   }
 
   changerIndexPatient(event: any) {
-    this.codePatient=event.target.value;
+    this.codePatient = this.getStringValue(event);
+    console.log(this.codePatient);
   }
 
   getChambres() {
@@ -569,7 +570,6 @@ export class CreateHospitalisationComponent implements OnInit {
       this.editHospitalisation.litId = this.litId;
       this.editHospitalisation.litId = this.litId;
       console.log("Hospitalisation", this.editHospitalisation);
-      return;
       this.hospitalisationService.updateHospitalisation(this.paramId, this.editHospitalisation).subscribe(
         {
           next: (response) => {
@@ -627,12 +627,12 @@ export class CreateHospitalisationComponent implements OnInit {
         syntheseDs: this.syntheseFormGroup.getRawValue(),
       };
       console.log("Hospitalisation", hostpitalisationData);
-      return;
       this.hospitalisationService.createHospitalisation(hostpitalisationData).subscribe(
         {
           next: (response) => {
             window.alert("Hospitalisation créee avec succès");
             console.log("Hospitalisation result", response);
+            this.router.navigate(['/admin/hospitalisations'])
             /*
             this.toastr.success('succès !', 'L\'hospitalisation a été crée avec succès !!');
             this.router.navigate(['/home/circuit/details/', this.circuit.id])
@@ -710,5 +710,10 @@ export class CreateHospitalisationComponent implements OnInit {
   private getValue(event: any) {
     if (event instanceof Event) return +(event.target as HTMLSelectElement).value;
     else return +event;
+  }
+
+  private getStringValue(event: any) {
+    if (event instanceof Event) return (event.target as HTMLSelectElement).value;
+    else return event;
   }
 }

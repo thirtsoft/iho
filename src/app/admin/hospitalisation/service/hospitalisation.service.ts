@@ -9,6 +9,7 @@ import { TraitementMedical } from '../models/traitement-medical';
 import { Synthese } from '../models/synthese';
 import { Discussion } from '../models/discussion';
 import TransferePayload from '../models/transfere-payload';
+import { HospitalisationSearch } from '../models/hospitalisation-search';
 
 @Injectable({
   providedIn: 'root'
@@ -24,6 +25,10 @@ export class HospitalisationService {
 
   getAllHospitalisations(): Observable<Hospitalisation[]> {
     return this.http.get<Hospitalisation[]>(`${this.baseUrl_1}/hospitalisation/list`);
+  }
+
+  getHospitalisationsByCritère(search: HospitalisationSearch): Observable<Hospitalisation[]> {
+    return this.http.post<Hospitalisation[]>(`${this.baseUrl_1}/hospitalisation/searchBy`, search);
   }
 
   getAllHospitalisationsOrderDesc(): Observable<Hospitalisation[]> {
