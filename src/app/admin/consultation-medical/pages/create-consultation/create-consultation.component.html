@@ -1,0 +1,408 @@
+<div class="page-wrapper">
+    <div class="content container-fluid">
+        <div class="page-header">
+            <div class="row">
+                <div class="col-sm-12">
+                    <h3 class="page-title">Consultation</h3>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a [routerLink]="'/admin/'">Administration</a></li>
+                        <li class="breadcrumb-item active">Création Consultation</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mb-5">
+                <div class="tab-vertical">
+                    <ul class="nav nav-tabs" id="myTab3" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="home-vertical-tab" data-toggle="tab" href="#home-vertical"
+                                role="tab" aria-controls="home" aria-selected="true">Etat civil Patient </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="constante-vertical-tab" data-toggle="tab" href="#constante-vertical"
+                                role="tab" aria-controls="constante" aria-selected="false">Constantes</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="interrogation-vertical-tab" data-toggle="tab"
+                                href="#interrogation-vertical" role="tab" aria-controls="interrogation"
+                                aria-selected="false">Interrogatoire</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="examenDermato-vertical-tab" data-toggle="tab"
+                                href="#examenDermato-vertical" role="tab" aria-controls="examenDermato"
+                                aria-selected="false">Examen dermatologique </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="examenAppareil-vertical-tab" data-toggle="tab"
+                                href="#examenAppareil-vertical" role="tab" aria-controls="examenAppareil"
+                                aria-selected="false">Examen appareils </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="resumeSyndro-vertical-tab" data-toggle="tab"
+                                href="#resumeSyndro-vertical" role="tab" aria-controls="resumeSyndro"
+                                aria-selected="false">Résumé syndromique </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="hypotheseDiagnos-vertical-tab" data-toggle="tab"
+                                href="#hypotheseDiagnos-vertical" role="tab" aria-controls="hypotheseDiagnos"
+                                aria-selected="false">Hypothèse diagnostique </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="bilanParaClinic-vertical-tab" data-toggle="tab"
+                                href="#bilanParaClinic-vertical" role="tab" aria-controls="bilanParaClinic"
+                                aria-selected="false">Bilan para clinique </a>
+                        </li>
+                    </ul>
+                    <form action="" method="post">
+                        <div class="tab-content" id="myTabContent3">
+
+                            <div class="tab-pane fade show active" id="home-vertical" role="tabpanel"
+                                aria-labelledby="home-vertical-tab">
+                                <div class="row">
+                                    <div class="col-lg-12 col-sm-12">
+                                        <label>Patient <span class="text-danger">*</span></label>
+                                        <select class="form-control select" (change)="changerIndexPatient($event)">
+                                            <option>Selectionnez</option>
+                                            <option *ngFor="let patient of patientList" [value]="patient.code">
+                                                {{patient?.prenom}} - {{patient?.nom}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 col-sm-6">
+                                        <div class="form-group mb-0">
+                                            <label>Prénom </label>
+                                            <input type="text" class="form-control" [value]="patient?.prenom" readonly>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-sm-6">
+                                        <div class="form-group mb-0">
+                                            <label>Nom </label>
+                                            <input type="text" class="form-control"  [value]="patient?.nom" readonly>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 col-sm-6">
+                                        <div class="form-group mb-0">
+                                            <label>Mode de vie </label>
+                                            <input type="text" class="form-control"  [value]="patient?.code" readonly>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-sm-6">
+                                        <div class="form-group mb-0">
+                                            <label>Situation matrimoniale </label>
+                                            <input type="text" class="form-control"  [value]="patient?.situationMatrimonial" readonly>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 col-sm-6">
+                                        <div class="form-group mb-0">
+                                            <label>Age </label>
+                                            <input type="text" class="form-control"  [value]="patient?.age" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-sm-6">
+                                        <div class="form-group mb-0">
+                                            <label>Profession </label>
+                                            <input type="text" class="form-control"  [value]="patient?.profession" readonly>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-12 col-sm-12">
+                                        <div class="form-group mb-0">
+                                            <label>Adresse </label>
+                                            <input type="text" class="form-control"  [value]="patient?.address" readonly>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                            <div class="tab-pane fade" id="constante-vertical" role="tabpanel"
+                                aria-labelledby="constante-vertical-tab">
+                                <h3>Constantes</h3>
+                                <form [formGroup]="constancePhysiqueFormGroup">
+                                    <div class="row">
+
+                                        <div class="col-md-6 col-sm-6">
+                                            <div class="form-group mb-0">
+                                                <label>Poids </label>
+                                                <input type="number" class="form-control" (input)="calculerIMC()" formControlName="poids">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-sm-6">
+                                            <div class="form-group mb-0">
+                                                <label>Température </label>
+                                                <input type="text" class="form-control" formControlName="temperature">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6 col-sm-6">
+                                            <div class="form-group mb-0">
+                                                <label>TAS </label>
+                                                <input type="number" class="form-control" formControlName="tensionArterielS">
+
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-sm-6">
+                                            <div class="form-group mb-0">
+                                                <label>TAD </label>
+                                                <input type="number" class="form-control" formControlName="tensionArterielD">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6 col-sm-6">
+                                            <div class="form-group mb-0">
+                                                <label>Pouls </label>
+                                                <input type="number" class="form-control" formControlName="poul">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-sm-6">
+                                            <div class="form-group mb-0">
+                                                <label>FR </label>
+                                                <input type="number" class="form-control" formControlName="frequenceR">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6 col-sm-6">
+                                            <div class="form-group mb-0">
+                                                <label>FC </label>
+                                                <input type="number" class="form-control" formControlName="frequenceC">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-sm-6">
+                                            <div class="form-group mb-0">
+                                                <label>Taille(m) </label>
+                                                <input type="number" class="form-control" (input)="calculerIMC()" formControlName="taille">
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6 col-sm-6">
+                                            <div class="form-group mb-0">
+                                                <label>IMC </label>
+                                                <input type="number" readonly class="form-control" formControlName="imc">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-sm-6">
+                                            <div class="form-group mb-0">
+                                                <label>Autres </label>
+                                                <input type="text" class="form-control" formControlName="autreConstances">
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="tab-pane fade" id="interrogation-vertical" role="tabpanel"
+                                aria-labelledby="interrogation-vertical-tab">
+                                <h3 class="text-center text-uppercase">Interrogatoire</h3>
+
+                                <div class="row">
+                                    <div class="col-xs-12 col-lg-12 col-sm-12">
+                                        <div class="well">
+                                            <strong>Rechercher notion :</strong>
+                                            <div class="row checklist" style="margin-left: 15px;">
+                                                <div class="checkbox col-xs-6 col-sm-6 col-md-6 col-lg-6"
+                                                    *ngFor="let eltRecherche of elementRecherceNotions">
+                                                    <label style="white-space: nowrap;">
+                                                        <input class="form-check-inline"
+                                                            type="checkbox"
+                                                            [value]="eltRecherche.id"
+                                                            (change)="onSelectedEltRecherche(eltRecherche)"  >{{eltRecherche.libelle}}</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-xs-12 col-lg-12 col-sm-12">
+                                        <div class="well">
+                                            <strong>Plaintes :</strong>
+                                            <div class="row checklist" style="margin-left: 15px;">
+                                                <div class="checkbox col-xs-6 col-sm-6 col-md-6 col-lg-6"
+                                                    *ngFor="let eltPlainte of elementPlaintes">
+                                                    <label style="white-space: nowrap;">
+                                                        <input class="form-check-inline"
+                                                            type="checkbox"
+                                                            [value]="eltPlainte.id"
+                                                            (change)="onSelectedEltPlainte(eltPlainte)" >{{eltPlainte.libelle}}</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-xs-12 col-lg-12 col-sm-12">
+                                        <div class="well">
+                                            <strong>Terrain :</strong>
+                                            <div class="row checklist" style="margin-left: 15px;">
+                                                <div class="checkbox col-xs-6 col-sm-6 col-md-6 col-lg-6"
+                                                    *ngFor="let eltTerrain of elementTerrains">
+                                                    <label style="white-space: nowrap;">
+                                                        <input class="form-check-inline"
+                                                            type="checkbox"
+                                                            [value]="eltTerrain.id"
+                                                            (change)="onSelectedEltTerrain(eltTerrain)">{{eltTerrain.libelle}}</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <div class="tab-pane fade" id="examenDermato-vertical" role="tabpanel"
+                                aria-labelledby="examenDermato-vertical-tab">
+                                <h3 class="text-center text-uppercase">Examen dermatologique </h3>
+                                <div class="row">
+                                    <div class="col-xs-12 col-lg-12 col-sm-12">
+                                        <div class="well">
+                                            <div class="row checklist" style="margin-left: 15px;">
+                                                <div class="checkbox col-xs-6 col-sm-6 col-md-6 col-lg-6"
+                                                    *ngFor="let eltExamn of elementExamenDermatologiques">
+                                                    <label style="white-space: nowrap;">
+                                                        <input class="form-check-inline"
+                                                            type="checkbox"
+                                                            [value]="eltExamn.id"
+                                                            (change)="onSelectedEltDermatologique(eltExamn)">{{eltExamn.libelle}}</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="tab-pane fade" id="examenAppareil-vertical" role="tabpanel"
+                                aria-labelledby="examenAppareil-vertical-tab">
+                                <h3 class="text-center text-uppercase">Examen des autres appareils</h3>
+                                <form [formGroup]="examenAppareilFormGroup">
+                                    <div class="row">
+                                        <div class="col-md-12 col-sm-12">
+                                            <div class="form-group mb-0">
+                                                <label>Résumé </label>
+                                                <textarea cols="10" rows="10" name="" id="" class="form-control"
+                                                formControlName="examenApp"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="tab-pane fade" id="resumeSyndro-vertical" role="tabpanel"
+                                aria-labelledby="resumeSyndro-vertical-tab">
+                                <h3 class="text-center text-uppercase">Résume syndromique </h3>
+                                    <form [formGroup]="resumeSyndromiqueFormGroup">
+                                    <div class="row">
+                                        <div class="col-md-12 col-sm-12">
+                                            <div class="form-group mb-0">
+                                                <label>Résumé </label>
+                                                <textarea cols="10" rows="10" name="" id="" class="form-control"
+                                                formControlName="resume"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="tab-pane fade" id="hypotheseDiagnos-vertical" role="tabpanel"
+                                aria-labelledby="hypotheseDiagnos-vertical-tab">
+                                <h3 class="text-center text-uppercase">Hypothèse diagnostique</h3>
+                                <div class="row">
+                                    <div class="col-xs-12 col-lg-12 col-sm-12  mb-4">
+                                        <div class="well">
+                                            <strong>Element hypothèse :</strong>
+                                            <div class="row checklist" style="margin-left: 15px;">
+                                                <div class="checkbox col-xs-6 col-sm-6 col-md-6 col-lg-6"
+                                                    *ngFor="let eltHypothese of elementHypotheses">
+                                                    <label style="white-space: nowrap;">
+                                                        <input class="form-check-inline"
+                                                            type="checkbox"
+                                                            [value]="eltHypothese.id"
+                                                            (change)="onSelectedEltHypothese($event, eltHypothese)">{{eltHypothese.libelle}}</label>
+                                                    
+                                                    <div class="checkbox col-xs-6 col-sm-6 col-md-6 col-lg-6"
+                                                        *ngFor="let eltSousHypo of eltHypothese.sousElementHypotheseDs">
+                                                        <label style="white-space: nowrap;">
+                                                            <input
+                                                                class="form-check-inline"
+                                                                type="checkbox"
+                                                                [value]="eltSousHypo.id"
+                                                                (change)="onSelectedSousEltHypothese($event, eltSousHypo)">{{eltSousHypo.libelle}}</label>
+
+                                                                
+                                                        <div class="checkbox col-xs-6 col-sm-6 col-md-6 col-lg-6"
+                                                            *ngFor="let eltSousHypoInf of eltSousHypo.sousElementDermatoseInfDs">
+                                                            <label style="white-space: nowrap;">
+                                                                <input
+                                                                    class="form-check-inline"
+                                                                    type="checkbox"
+                                                                    [value]="eltSousHypoInf.id"
+                                                                    (change)="onSelectedSousEltHypotheseInf($event,eltSousHypoInf)">{{eltSousHypoInf.libelle}}</label>
+                                                        </div>
+                                                   
+                                                   
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="bilanParaClinic-vertical" role="tabpanel"
+                                aria-labelledby="bilanParaClinic-vertical-tab">
+                                <h3 class="text-center text-uppercase">Bilan paraclinique de base </h3>
+                                <form [formGroup]="bilanParaCliniqueFormGroup">
+                                    <div class="row">
+                                        <div class="col-md-12 col-sm-12 mb-4">
+                                            <div class="form-group mb-0">
+                                                <label>Biologie </label>
+                                                <textarea cols="5" rows="5" name="" id="" class="form-control"
+                                                formControlName="biologie"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 col-sm-12">
+                                            <div class="form-group mb-0">
+                                                <label>Biochimie </label>
+                                                <textarea cols="5" rows="5" name="" id="" class="form-control"
+                                                formControlName="biochimie"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+
+                        </div>
+
+                    </form>
+
+                    <div style="margin-top: 125px col-sm-12">
+                        <button type="button" class="btn btn-success si_accept_confirm btn-lg float-lg-right"
+                        style="margin-right: 25px;" 
+                        id="btn-yes" (click)="saveConsultation()">
+                            Enregistrer
+                        </button>
+                        <button type="button" class="btn btn-danger si_accept_cancel float-left btn-lg"
+                        style="margin-left: 25px;">
+                            Annuler
+                        </button>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+</div>

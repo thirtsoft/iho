@@ -240,17 +240,15 @@ const routes: Routes = [
         loadChildren: () =>
           import('./hospitalisation/hospitalisation.module').then((m) => m.HospitalisationModule),
       },
-
+      {
+        path: 'consultations',
+        loadChildren: () =>
+          import('./consultation-medical/consultation-medical.module').then((m) => m.ConsultationMedicalModule),
+      },
       {
         path: 'rendezvous',
         loadChildren: () =>
           import('./rendezvous/rendezvous.module').then((m) => m.RendezvousModule),
-      },
-
-      {
-        path: 'consultation',
-        loadChildren: () =>
-          import('./consultation/consultation.module').then((m) => m.ConsultationModule),
       },
 
       {
@@ -266,6 +264,7 @@ const routes: Routes = [
       },
     ],
   },
+  { path: 'consultation-medical', loadChildren: () => import('./consultation-medical/consultation-medical.module').then(m => m.ConsultationMedicalModule) },
 
 ];
 

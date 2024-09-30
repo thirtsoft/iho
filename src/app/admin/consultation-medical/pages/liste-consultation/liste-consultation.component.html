@@ -1,0 +1,155 @@
+<div class="page-wrapper">
+	<div class="content container-fluid">
+		<div class="page-header">
+			<div class="row">
+				<div class="col-sm-7 col-auto">
+					<h3 class="page-title">Consultations medicales</h3>
+					<ul class="breadcrumb">
+						<li class="breadcrumb-item"><a [routerLink]="'/admin/'">Tableau de bord</a></li>
+						<li class="breadcrumb-item active">Liste des Consultations medicales</li>
+					</ul>
+
+				</div>
+				<div class="col-sm-5">
+					<a class="btn btn-primary float-right mt-2" data-toggle="modal" (click)="ajouterConsultation()">
+						<i class="fa fa-plus-circle"></i>
+						Ajouter
+					</a>
+					<a class="btn btn-warning float-right mt-2 m-lg-2" data-toggle="modal"
+						(click)="ouvrirHospitalisation()"> <i
+							class="fa fa-file-pdf"></i>
+						Exporter
+					</a>
+
+					<a class="btn btn-primary float-right mt-2 m-lg-2" data-toggle="modal"
+						(click)="rafraichirHospitalisation()"> 
+						Rafraichir
+					</a>
+				</div>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="card">
+					<div class="card-body">
+						<div class="modal-body">
+							<form [formGroup]="searchFormGroup">
+								<div class="row form-row">
+									<div class="col-2 col-sm-2">
+										<div class="form-group">
+											<label>Etat <span class="text-danger">*</span></label>
+											<select class="form-control select" formControlName="etat">
+												<option>Selectionnez</option>
+												<option value="En Cours">En Cours</option>
+												<option value="Sortie">Sortie</option>
+												<option value="Transféré">Transféré</option>
+												<option value="Décès">Décès</option>
+											</select>
+										</div>
+									</div>
+
+									<div class="col-3 col-sm-3">
+										<div class="form-group">
+											<label>Code Patient <span class="text-danger">*</span></label>
+											<input type="text" formControlName="codePatient" placeholder="libelle"
+												class="form-control">
+										</div>
+									</div>
+									<div class="col-2 col-sm-2">
+										<div class="form-group">
+											<label>Date début <span class="text-danger">*</span></label>
+											<input type="date" formControlName="dateDebut" class="form-control">
+										</div>
+									</div>
+									<div class="col-2 col-sm-2">
+										<div class="form-group">
+											<label>Date fin <span class="text-danger">*</span></label>
+											<input type="date" formControlName="dateFin" class="form-control">
+										</div>
+									</div>
+
+									<div class="col-3 col-sm-3" style="margin-top:32px;">
+										<button type="button" class="btn btn-success si_accept_confirm" id="btn-yes"
+											>Rechercher</button>
+										<button *ngIf="seachValue" type="button" class="btn btn-danger si_accept_cancel"
+											(click)="ouvrirHospitalisation()">
+											<i class="fa fa-file-pdf"></i> Générer rapport</button>
+									</div>
+								</div>
+							</form>
+						</div>
+
+						<div class="table-responsive">
+							<div class="table-responsive">
+								<table class="datatable table table-hover table-center mb-0">
+									<thead>
+										<tr>
+											<th>Numéro</th>
+											<th>Date admission</th>
+											<th>Patient</th>
+											<th>Médecin</th>
+											<th>Status</th>
+											<th class="text-right">Actions</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr *ngFor="let consultation of consultationMedicalList">
+											<td>{{consultation.numeroConsultation}}</td>
+											<td>{{consultation.dateConsultation}}</td>
+											<td>
+												<h2 class="table-avatar">
+													<a [routerLink]="'/admin/doc-profile'">{{consultation.nomCompletPatient
+														}} </a>
+												</h2>
+											</td>
+											<td>{{consultation.nomCompletAgent}}</td>
+											<td>{{consultation?.typePatient ? 'Homme': 'Femme'}}</td>
+
+											<td class="text-right">
+												<div class="actions">
+													<a class="btn btn-sm bg-warning" data-toggle="modal"
+														(click)="voirDetailsConsultation(consultation.id)">
+														<i class="fe fe-eye"></i> voir
+													</a>
+													<a class="btn btn-sm bg-success-light" data-toggle="modal"
+														(click)="editerConsultation(consultation.id)">
+														<i class="fe fe-pencil"></i> Edit
+													</a>
+													<a data-toggle="modal" class="btn btn-sm bg-danger-light"
+														data-toggle="modal"
+														(click)="deleteModal(delete,consultation)">
+														<i class="fe fe-trash"></i> Delete
+													</a>
+												</div>
+											</td>
+										</tr>
+
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+</div>
+
+
+<ng-template #delete>
+	<div class="modal-header">
+		<h4 class="modal-title pull-left">Delete</h4>
+		<button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="modalRef.hide()">
+			<span aria-hidden="true">&times;</span>
+		</button>
+	</div>
+	<div class="modal-body text-center">
+		<p id="acc_msg">Etes-vous sur de vouloir supprimer cette consultation ?</p>
+		<div style="margin-top:25px">
+			<button type="button" class="btn btn-success si_accept_confirm" id="btn-yes">Oui</button>
+			<button type="button" class="btn btn-danger si_accept_cancel" (click)="decline()">No</button>
+		</div>
+	</div>
+</ng-template>

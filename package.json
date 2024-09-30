@@ -32,7 +32,6 @@
     "@ng-select/ng-select": "^7.4.0",
     "angular-datatables": "^9.0.2",
     "angular-ng-autocomplete": "^2.0.1",
-    "angular-notifier": "^10.0.0",
     "angular-resize-event": "^1.2.2",
     "animate.css": "^4.1.1",
     "apexcharts": "^3.26.3",

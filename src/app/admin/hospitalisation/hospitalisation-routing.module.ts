@@ -5,18 +5,19 @@ import { DetailHospitalisationComponent } from './pages/detail-hospitalisation/d
 import { HospitalisationsComponent } from './pages/hospitalisations/hospitalisations.component';
 
 const routes: Routes = [
-  {
-    path: 'create', component: CreateHospitalisationComponent
-  },
-  {
-    path: 'edit/:id', component: CreateHospitalisationComponent
-  },
-  {
-    path: '', component: HospitalisationsComponent
-  },
-  {
-    path: 'details/:id', component: DetailHospitalisationComponent
-  }
+      {
+        path: '', component: HospitalisationsComponent
+      },
+      {
+        path: 'create', component: CreateHospitalisationComponent
+      },
+      {
+        path: 'edit/:id', component: CreateHospitalisationComponent
+      },
+     
+      {
+        path: 'details/:id', component: DetailHospitalisationComponent
+      }
 ];
 
 @NgModule({

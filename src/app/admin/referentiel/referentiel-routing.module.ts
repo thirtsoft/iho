@@ -7,6 +7,11 @@ import { TrancheAgeComponent } from './pages/tranche-age/tranche-age.component';
 import { MedicamentComponent } from './pages/medicament/medicament.component';
 import { CategorieMedicamentComponent } from './pages/categorie-medicament/categorie-medicament.component';
 import { GroupeSanguinComponent } from './pages/groupe-sanguin/groupe-sanguin.component';
+import { ElementExamenDermatologiqueComponent } from './pages/element-examen-dermatologique/element-examen-dermatologique.component';
+import { ElementHypotheseComponent } from './pages/element-hypothese/element-hypothese.component';
+import { ElementPlainteComponent } from './pages/element-plainte/element-plainte.component';
+import { ElementRehercheNotionComponent } from './pages/element-reherche-notion/element-reherche-notion.component';
+import { ElementTerrainComponent } from './pages/element-terrain/element-terrain.component';
 
 const routes: Routes = [
   {
@@ -36,6 +41,26 @@ const routes: Routes = [
 	{
 		path : 'groupe-sanguins',
 		component: GroupeSanguinComponent
+	},
+	{
+		path : 'element-examen-dermatologique',
+		component: ElementExamenDermatologiqueComponent
+	},
+	{
+		path : 'element-hypothese',
+		component: ElementHypotheseComponent
+	},
+	{
+		path : 'element-plainte',
+		component: ElementPlainteComponent
+	},
+	{
+		path : 'element-recherche-notion',
+		component: ElementRehercheNotionComponent
+	},
+	{
+		path : 'element-terrain',
+		component: ElementTerrainComponent
 	}
 ];
 

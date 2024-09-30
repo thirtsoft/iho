@@ -1,0 +1,411 @@
+<div class="page-wrapper">
+<div class="content container-fluid">
+    <div class="row">
+        <div class="col-lg-6 col-sm-12 d-flex">
+            <div class="card flex-fill">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-sm-8">
+                            <h3 class="card-title">Détails consultation</h3>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="text-right">
+                                <a title="Edit Profile" class="btn btn-primary btn-sm" data-toggle="modal"
+                                    (click)="editerConsultation(consultationMedicalDetails.id)"><i class="fe fe-pencil"></i>
+                                    Modifier</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="profile-view-bottom">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="info-list">
+                                    <div class="title">Numéro </div>
+                                    <div class="text" id="bank_name">{{consultationMedicalDetails?.numeroConsultation}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="info-list">
+                                    <div class="title">Médecin</div>
+                                    <div class="text" id="branch_name">{{consultationMedicalDetails?.nomCompletAgent}}</div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="info-list">
+                                    <div class="title">Date création</div>
+                                    <div class="text" id="account_no">{{consultationMedicalDetails?.dateConsultation}}</div>
+                                </div>
+                            </div>
+                            <!-- <div class="col-lg-6">
+                                <div class="info-list">
+                                    <div class="title">Etat</div>
+                                    <div class="text" id="account_name">{{hospitalisation?.status}}</div>
+                                </div>
+                            </div> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6 col-sm-12 d-flex">
+            <div class="card flex-fill">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <h3 class="card-title">Détails patient</h3>
+                        </div>
+                        <div class="col-sm-6">
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="profile-view-bottom">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="info-list">
+                                    <div class="title">Patient </div>
+                                    <div class="text" id="bank_name">{{consultationMedicalDetails?.civilitePatient}}
+                                        {{consultationMedicalDetails?.nomCompletPatient}}</div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="info-list">
+                                    <div class="title">Situation matrimonial</div>
+                                    <div class="text" id="branch_name">
+                                        {{consultationMedicalDetails?.situationMatrimonial}}</div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="info-list">
+                                    <div class="title">Téléphone </div>
+                                    <div class="text" id="account_no">{{consultationMedicalDetails?.telephone}}</div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="info-list">
+                                    <div class="title">Index patient</div>
+                                    <div class="text" id="account_name">{{consultationMedicalDetails?.indexPatient}}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-body pt-0">
+                    <nav class="user-tabs mb-4">
+                        <ul class="nav nav-tabs nav-tabs-bottom nav-justified">
+                            <li class="nav-item">
+                                <a class="nav-link active" href="#constancePhysique" data-toggle="tab">Constance physique</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#examenAppareil" data-toggle="tab">Examen des appareils
+                                    </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#elementRechercheNotions" data-toggle="tab">Elément recherche notion </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#resumeSyndromique" data-toggle="tab">Résumé syndromique </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#bilanParaclinique" data-toggle="tab">Bilan paraclinique </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="#elementPlaintes" data-toggle="tab">Elément plaintes </a>
+                            </li>
+                            
+                            <li class="nav-item">
+                                <a class="nav-link" href="#elementTerrains" data-toggle="tab">Elément terrains </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#elementExamenDermatologiques" data-toggle="tab">Elément examen Dermatologiques </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#elementHypotheses" data-toggle="tab">Elément hypotheses </a>
+                            </li>
+                        </ul>
+                    </nav>
+                    <div class="tab-content pt-0">
+                        <div id="constancePhysique" class="tab-pane fade show active">
+                            <div class="card card-table mb-0">
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table class="table table-hover table-center mb-0">
+                                            <thead>
+                                                <tr>
+                                                    <th>Agent</th>
+                                                    <th>TAS</th>
+                                                    <th>TAD</th>
+                                                    <th>Température</th>
+                                                    <th>FC</th>
+                                                    <th>FR</th>
+                                                    <th>Pouls</th>
+                                                    <th>Poids</th>
+                                                    <th>Taille</th>
+                                                    <th>IMC</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>{{consultationMedicalDetails?.nomCompletAgent}}</td>
+                                                    <td>{{consultationMedicalDetails?.constancePhysiqueDs?.tensionArterielS}}</td>
+                                                    <td>{{consultationMedicalDetails?.constancePhysiqueDs?.tensionArterielD}}</td>
+                                                    <td>{{consultationMedicalDetails?.constancePhysiqueDs?.temperature}}</td>
+                                                    <td>{{consultationMedicalDetails?.constancePhysiqueDs?.frequenceC}}</td>
+                                                    <td>{{consultationMedicalDetails?.constancePhysiqueDs?.frequenceR}}</td>
+                                                    <td>{{consultationMedicalDetails?.constancePhysiqueDs?.poul}}</td>
+                                                    <td>{{consultationMedicalDetails?.constancePhysiqueDs?.poids}}</td>
+                                                    <td>{{consultationMedicalDetails?.constancePhysiqueDs?.taille}}</td>
+                                                    <td>{{consultationMedicalDetails?.constancePhysiqueDs?.imc}}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="examenAppareil">
+                            <div class="card card-table mb-0">
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table class="table table-hover table-center mb-0">
+                                            <thead>
+                                                <tr>
+                                                    <th>Agent</th>
+                                                    <th>Date création</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>{{consultationMedicalDetails?.nomCompletAgent}}</td>
+                                                    <td>{{consultationMedicalDetails?.examenAppareilDs?.examenApp}} </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="elementRechercheNotions">
+                            <div class="card card-table mb-0">
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table class="table table-hover table-center mb-0">
+                                            <thead>
+                                                <tr>
+                                                    <th>Agent</th>
+                                                    <th>Libellé</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr
+                                                    *ngFor="let eletRecherche of consultationMedicalDetails?.elementRechercheNotions">
+                                                    <td>{{consultationMedicalDetails?.nomCompletAgent}}</td>
+                                                    <td>{{eletRecherche?.libelle}}</td>
+                                                    <td class="text-right">
+                                                        <div class="table-action">
+                                                            <a href="javascript:void(0);"
+                                                                class="btn btn-sm bg-info-light">
+                                                                <i class="far fa-eye"></i> View
+                                                            </a>
+
+                                                            <a href="javascript:void(0);"
+                                                                class="btn btn-sm bg-success-light">
+                                                                <i class="fas fa-check"></i> Accept
+                                                            </a>
+                                                            <a href="javascript:void(0);"
+                                                                class="btn btn-sm bg-danger-light">
+                                                                <i class="fas fa-times"></i> Cancel
+                                                            </a>
+                                                        </div>
+                                                    </td> 
+                                                </tr>
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="resumeSyndromique">
+                            <div class="card card-table mb-0">
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table class="table table-hover table-center mb-0">
+                                            <thead>
+                                                <tr>
+                                                    <th>Agent</th>
+                                                    <th>Libellé</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>{{consultationMedicalDetails?.nomCompletAgent}}</td>
+                                                    <td>{{consultationMedicalDetails?.resumeSyndromiqueDs?.resume}}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="bilanParaclinique">
+                            <div class="card card-table mb-0">
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table class="table table-hover table-center mb-0">
+                                            <thead>
+                                                <tr>
+                                                    <th>Agent</th>
+                                                    <th>Biologie</th>
+                                                    <th>Biochimie</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>{{consultationMedicalDetails?.nomCompletAgent}}</td>
+                                                    <td>{{consultationMedicalDetails?.bilanParacliniqueDs?.biologie}}</td>
+                                                    <td>{{consultationMedicalDetails?.bilanParacliniqueDs?.biochimie}}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane fade" id="elementPlaintes">
+                            <div class="card card-table mb-0">
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table class="table table-hover table-center mb-0">
+                                            <thead>
+                                                <tr>
+                                                    <th>Agent</th>
+                                                    <th>Libellé</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let eltPlaint of consultationMedicalDetails?.elementPlaintes">
+                                                    <td>{{consultationMedicalDetails?.nomCompletAgent}}</td>
+                                                    <td>{{eltPlaint?.libelle}}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane fade" id="elementTerrains">
+                            <div class="card card-table mb-0">
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table class="table table-hover table-center mb-0">
+                                            <thead>
+                                                <tr>
+                                                    <th>Agent</th>
+                                                    <th>Libellé</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let eltTerrain of consultationMedicalDetails?.elementTerrains">
+                                                    <td>{{consultationMedicalDetails?.nomCompletAgent}}</td>
+                                                    <td>{{eltTerrain?.libelle}}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                         <div class="tab-pane fade" id="elementExamenDermatologiques">
+                            <div class="card card-table mb-0">
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table class="table table-hover table-center mb-0">
+                                            <thead>
+                                                <tr>
+                                                    <th>Agent</th>
+                                                    <th>Libellé</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let eltDermato of consultationMedicalDetails?.elementExamenDermatologiques">
+                                                    <td>{{consultationMedicalDetails?.nomCompletAgent}}</td>
+                                                    <td>{{eltDermato?.libelle}}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane fade" id="elementHypotheses">
+                            <div class="card card-table mb-0">
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table class="table table-hover table-center mb-0">
+                                            <thead>
+                                                <tr>
+                                                    <th>Agent</th>
+                                                    <th>Libellé</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let eltHypothes of consultationMedicalDetails?.elementHypotheses">
+                                                    <td>{{consultationMedicalDetails?.nomCompletAgent}}</td>
+                                                    <td>{{eltHypothes?.libelle}}
+                                                        <br>
+                                                        <div *ngFor="let sousEltHypo of eltHypothes?.sousElementHypotheseDs">
+                                                            {{sousEltHypo?.libelle}},
+                                                            <br>
+
+                                                            <span *ngFor="let sousEltHypoInf of sousEltHypo?.sousElementDermatoseInfDs">
+                                                                {{sousEltHypoInf?.libelle}},
+                                                            </span>
+                                                        </div>
+                                                    </td>
+
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<div class="modal-footer">
+    <button type="button" class="btn btn-success">
+        Transférer l'hospitalisation
+    </button>
+    <button type="button" class="btn btn-primary" >
+        Cloturer l'hospitalisation
+    </button>
+    <button type="button" class="btn btn-white" (click)="goToListeConsultations()">
+        <i class="fas fa-arrow-alt-circle-left"></i>
+        Retour
+    </button>
+</div>
+ -->

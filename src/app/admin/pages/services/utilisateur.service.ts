@@ -5,6 +5,7 @@ import { Action } from '../models/action';
 import { Observable } from 'rxjs';
 import { Profil } from '../models/profil';
 import { Utilisateur } from '../models/utilisateur';
+import { ResponseMessage } from '../../referentiel/models/response-message';
 
 @Injectable({
   providedIn: 'root'
@@ -85,6 +86,10 @@ export class UtilisateurService {
 
   createAgent(info: Utilisateur) {
     return this.http.post(`${this.baseUrl_1}/utilisateur/save`, info);
+  }
+
+  saveAgent(info: Utilisateur) {
+    return this.http.post<ResponseMessage>(`${this.baseUrl_1}/utilisateur/saveagent`, info);
   }
 
   editAgent(info: Utilisateur): Observable<Utilisateur> {

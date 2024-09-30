@@ -11,6 +11,11 @@ import { GroupeSanguinComponent } from './pages/groupe-sanguin/groupe-sanguin.co
 import { TrancheAgeComponent } from './pages/tranche-age/tranche-age.component';
 import { ServicesPartenaireComponent } from './pages/services-partenaire/services-partenaire.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ElementExamenDermatologiqueComponent } from './pages/element-examen-dermatologique/element-examen-dermatologique.component';
+import { ElementHypotheseComponent } from './pages/element-hypothese/element-hypothese.component';
+import { ElementPlainteComponent } from './pages/element-plainte/element-plainte.component';
+import { ElementTerrainComponent } from './pages/element-terrain/element-terrain.component';
+import { ElementRehercheNotionComponent } from './pages/element-reherche-notion/element-reherche-notion.component';
 
 
 @NgModule({
@@ -22,7 +27,12 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     ChambreComponent,
     GroupeSanguinComponent,
     TrancheAgeComponent,
-    ServicesPartenaireComponent
+    ServicesPartenaireComponent,
+    ElementExamenDermatologiqueComponent,
+    ElementHypotheseComponent,
+    ElementPlainteComponent,
+    ElementTerrainComponent,
+    ElementRehercheNotionComponent
   ],
   imports: [
     CommonModule,

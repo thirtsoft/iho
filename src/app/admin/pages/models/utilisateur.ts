@@ -1,3 +1,5 @@
+import { Profil } from "./profil";
+
 export interface Utilisateur {
     id?: number;
     codeUtilisateur?: string;
@@ -23,4 +25,6 @@ export interface Utilisateur {
     lastModifiedDate?: Date;
     createdByUser?: string;
     actif?: boolean;
+
+    profilDs?: Profil;
 }

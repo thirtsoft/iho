@@ -3,7 +3,10 @@ import { Injectable } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { Utilisateur } from '../models/utilisateur';
+import { Utilisateur } from '../admin/pages/models/utilisateur';
+import { FirstSignInRequest } from '../admin/pages/models/first-sign-in-request';
+import { SignInResponse } from '../admin/pages/models/sign-in-response';
+
 
 @Injectable({
   providedIn: 'root'
@@ -72,5 +75,18 @@ export class UtilisateurService {
   public deleteUtilisateur(utilisateurId: number): Observable<void> {
     return this.http.delete<void>(`${this.apiServerUrl}/utilisateurs/delete/${utilisateurId}`);
   }
+
+  getFirstSigninUser(token: string) {
+    return this.http.get(this.apiServerUrl +`/activation/${token}`);
+  }
+
+  firstSignIn(firstSignInReq: FirstSignInRequest,isIfAdmin: boolean): Observable<SignInResponse> {
+    let url = this.apiServerUrl + '/if/activation';
+    if(!isIfAdmin){
+      url = this.apiServerUrl + `/users/activation`;
+   }
+   return this.http.post<SignInResponse>(this.apiServerUrl + url, firstSignInReq);
+  }
+
 
 }

@@ -5,6 +5,8 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UtilisateurService } from '../pages/services/utilisateur.service';
 import { Utilisateur } from '../pages/models/utilisateur';
+import { Profil } from '../pages/models/profil';
+import { ProfilageService } from '../profil/service/profilage.service';
 
 @Component({
   selector: 'app-doctors',
@@ -26,16 +28,20 @@ export class DoctorsComponent implements OnInit {
 
   utilisateursFormGroup!: FormGroup;
 
+  profils: Profil[]=[];
+
 
   constructor(
-    private commonService: CommonServiceService,
     private modalService: BsModalService,
     private utilisateurService: UtilisateurService,
+    private profilageService: ProfilageService,
     private _formBuilder: FormBuilder
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
     this.getAgents();
+    this.getProfils();
     this.initializeForm(null);
   }
 
@@ -43,10 +49,18 @@ export class DoctorsComponent implements OnInit {
     this.utilisateurService.getAllUtilisateurs().subscribe(
       (data: any[]) => {
         this.utilisateurs = data;
-        console.log(this.utilisateurs);
         $(function () {
           $('table').DataTable();
         });
+      },
+      (error) => (this.errorMessage = <any>error)
+    );
+  }
+
+  getProfils() {
+    this.profilageService.getAllProfils().subscribe(
+      (data: any[]) => {
+        this.profils = data;
       },
       (error) => (this.errorMessage = <any>error)
     );
@@ -56,8 +70,10 @@ export class DoctorsComponent implements OnInit {
     this.utilisateursFormGroup =  this._formBuilder.group({
       id: [utilisateur?.id ? utilisateur.id : ''],
       nom: [utilisateur?.nom ? utilisateur.nom: '', Validators.required],
+      prenom: [utilisateur?.prenom ? utilisateur.prenom: '', Validators.required],
       email: [utilisateur?.email ? utilisateur.email : '', Validators.required],
       telephone: [utilisateur?.telephone ? utilisateur.telephone : '', Validators.required],
+      profileId: [utilisateur?.profilDs.id ? utilisateur?.profilDs.id :'', Validators.required],
     });
   }
 
@@ -68,52 +84,61 @@ export class DoctorsComponent implements OnInit {
   }
 
   save() {
-    const payload = this.utilisateursFormGroup.value;
-      this.utilisateurService.createAgent(payload).subscribe({ 
-        next: (data) =>{
-          console.log('payload after : ',  data);
-          if(data === 'OK') {
-            window.alert('chambre créer avec succès')
-          //  this.toastService.success('succès', 'Les informations du patient ont été enregistrées avec succès !!! ');
-          }else if(data === 'FAILED') {
-        //    this.toastService.error('error', 'Erreur lors de la création : ' + data.message);
-          }
-          this.modalRef.hide();
-          this.ngOnInit();
-        },
-        error: (data) => {
-          console.log('error', 'Erreur lors de la création : ' + data.error);
-        //  this.toastService.error('error', 'Erreur lors de la création : ' + data.error);  
+    const payload: Utilisateur = {
+      id: this.utilisateursFormGroup.get("id").value,
+      nom: this.utilisateursFormGroup.get("nom").value,
+      prenom: this.utilisateursFormGroup.get("prenom").value,
+      email: this.utilisateursFormGroup.get("email").value,
+      telephone: this.utilisateursFormGroup.get("telephone").value,
+      profilDs: this.profils.filter(r => r.id == this.utilisateursFormGroup.get("profileId").value)[0]
+    }
+    this.utilisateurService.saveAgent(payload).subscribe({ 
+      next: (data) =>{
+        if(data.statut === 'OK') {
+          window.alert("User create succeeded");
+       //   this.notifier.notify('success', 'Le compte de l\'agent a été crée avec succès.')
+        }else if(data.statut === 'FAILED') {
+          window.alert("User not create");
+       //   this.notifier.notify('error', 'Erreur lors de la création : ' + data.message); 
+        }
+        this.modalRef.hide();
+        this.ngOnInit();
+      },
+      error: (data) => {
+      //  this.notifier.notify('error', 'Erreur lors de la création : ' + data.error); 
       }
-      });
+    });
   }
 
-  editModal(template: TemplateRef<any>, chambre) {
-    this.initializeForm(chambre);
-    this.utilisateurId = chambre.id;
+  editModal(template: TemplateRef<any>, utilisateur) {
+    this.initializeForm(utilisateur);
     this.modalRef = this.modalService.show(template, {
       class: 'modal-lg modal-dialog-centered',
     });
   }
 
   editer() {
-    const payload = this.utilisateursFormGroup.value;
+    const payload: Utilisateur = {
+      id: this.utilisateursFormGroup.get("id").value,
+      nom: this.utilisateursFormGroup.get("nom").value,
+      prenom: this.utilisateursFormGroup.get("prenom").value,
+      email: this.utilisateursFormGroup.get("email").value,
+      telephone: this.utilisateursFormGroup.get("telephone").value,
+      profilDs: this.profils.filter(r => r.id == this.utilisateursFormGroup.get("profileId").value)[0]
+    }
     this.utilisateurService.updateUtilisateur(this.utilisateurId, payload).subscribe({ 
       next: (data) =>{
-        console.log('payload after : ',  data);
         if(data != null) {
-          window.alert('chambre updated avec succès')
-         //  this.toastService.success('succès', 'Les informations du patient ont été enregistrées avec succès !!! ');
+      //    this.notifier.notify('success', 'Le compte de l\'agent a été modifié avec succès.')
         }else if(data === null) {
-        //    this.toastService.error('error', 'Erreur lors de la création : ' + data.message);
+      //  this.notifier.notify('error', 'Erreur lors de la modification du compte de l\'agent.')
       }
       this.modalRef.hide();
       this.ngOnInit();
       },
           
       error: (data) => {
-        console.log('error', 'Erreur lors de la création : ' + data.error);
-      //  this.toastService.error('error', 'Erreur lors de la création : ' + data.error);        
+    //    this.notifier.notify('error', 'Erreur lors de la création : ' + data.error);       
     }
     });
   }
@@ -178,4 +203,3 @@ export class DoctorsComponent implements OnInit {
       (error) => (this.errorMessage = <any>error)
     );
   } */
-

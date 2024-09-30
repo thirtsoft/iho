@@ -182,10 +182,17 @@
 					<a (click)="change('Dosseirs-Medicals')" [routerLink]="'/admin/dossiers-medicals'" >
 						<i class="fa fa-hospital-o"></i> <span>DMI</span></a>
 				</li>
+
+				<li [class.active]="page === 'Consultations'">
+					<a (click)="change('Consultations')" [routerLink]="'/admin/consultations'" >
+						<i class="fas fa-stethoscope"></i> <span>Consultation</span></a>
+				</li>
+				
 				<li [class.active]="page === 'Hospitalisations'">
 					<a (click)="change('Hospitalisations')" [routerLink]="'/admin/hospitalisations'" >
 						<i class="fas fa-stethoscope"></i> <span>Hospitalisation</span></a>
 				</li>
+				
 				<li [class.active]="page === 'Appointments'">
 					<a  (click)="change('Appointments')" [routerLink]="'/admin/appointment'"><i class="fe fe-layout"></i> <span>Mes rendez-vous</span></a>
 				</li>
@@ -235,6 +242,22 @@
 
 						<li [class.active]="page === 'Groupe-Sanguins'"> 
 							<a (click)="change('Groupe-Sanguins')" [routerLink]="'referentiels/groupe-sanguins'"><i class="fe fe-layout"></i>&nbsp; <span>Groupe sanguins</span></a>
+						</li>
+
+						<li [class.active]="page === 'Element-Examen-Dermatologique'"> 
+							<a (click)="change('Element-Examen-Dermatologique')" [routerLink]="'referentiels/element-examen-dermatologique'"><i class="fe fe-layout"></i>&nbsp; <span>Dermatologique</span></a>
+						</li>
+						<li [class.active]="page === 'Element-Hypothese'"> 
+							<a (click)="change('Element-Hypothese')" [routerLink]="'referentiels/element-hypothese'"><i class="fe fe-layout"></i>&nbsp; <span>Hypothèses</span></a>
+						</li>
+						<li [class.active]="page === 'Element-Plainte'"> 
+							<a (click)="change('Element-Plainte')" [routerLink]="'referentiels/element-plainte'"><i class="fe fe-layout"></i>&nbsp; <span>Plaintes</span></a>
+						</li>
+						<li [class.active]="page === 'Element-Recherche-Notion'"> 
+							<a (click)="change('Element-Recherche-Notion')" [routerLink]="'referentiels/element-recherche-notion'"><i class="fe fe-layout"></i>&nbsp; <span>Recherche notion</span></a>
+						</li>
+						<li [class.active]="page === 'Element-Terrain'"> 
+							<a (click)="change('Element-Terrain')" [routerLink]="'referentiels/element-terrain'"><i class="fe fe-layout"></i>&nbsp; <span>Terrains</span></a>
 						</li>
 						
 					</ul>

@@ -9,6 +9,7 @@ import { DataService } from './../data.service';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgSelect2Module } from 'ng-select2';
 import { ListeRendezVousComponent } from './rendezvous/pages/liste-rendez-vous/liste-rendez-vous.component';
+import { ConsultationMedicalModule } from './consultation-medical/consultation-medical.module';
 
 @NgModule({
   declarations: [AdminComponent, SidemenuComponent, ListeRendezVousComponent],
@@ -19,6 +20,7 @@ import { ListeRendezVousComponent } from './rendezvous/pages/liste-rendez-vous/l
     NgSelect2Module,
   //  InMemoryWebApiModule.forRoot(DataService),
     ModalModule.forRoot(),
+  ConsultationMedicalModule,
   ],
 })
 export class AdminModule {}
