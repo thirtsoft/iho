@@ -4,8 +4,14 @@
 
 export const environment = {
   production: false,
-  apiBaseUrl: 'http://localhost:8094/iho/api',
-  apiLogin: 'http://localhost:8094/iho/api/auth',
+  apiBaseUrl: ' https://ihosnaapplimed-74da583e9eb9.herokuapp.com',
+  apiLogin: ' https://ihosnaapplimed-74da583e9eb9.herokuapp.com/auth',
+
+ // apiBaseUrl: 'http://localhost:8094/iho/api',
+ // apiLogin: 'http://localhost:8094/iho/api/auth',
+
+
+  
 };
 
 /*
